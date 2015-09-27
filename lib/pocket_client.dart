@@ -8,6 +8,8 @@ library pocket_client;
 
 export 'src/pocket_client_base.dart';
 export 'src/pocket_user.dart';
+export 'src/pocket_data.dart';
+export 'src/pocket_retrieve_options.dart';
 export 'src/pocket_state.dart';
 export 'src/pocket_content_type.dart';
 export 'src/pocket_detail_type.dart';

@@ -1,5 +1,5 @@
 
-library pocket_client.authorization_test;
+library pocket_client.user_test;
 
 import 'package:pocket_client/pocket_client.dart';
 import 'package:test/test.dart';

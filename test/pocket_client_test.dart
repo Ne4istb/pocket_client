@@ -6,8 +6,10 @@ library pocket_client.test;
 
 import 'authorization_test.dart';
 import 'pocket_user_test.dart';
+import 'pocket_retrieve_options_test.dart';
 
 void main() {
   AuthorizationTests.run();
   PocketUserTests.run();
+  PocketRetrieveOptionsTests.run();
 }

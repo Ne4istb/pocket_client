@@ -1,8 +1,5 @@
 // Copyright (c) 2015, Ne4istb. All rights reserved. Use of this source code
-
 // is governed by a BSD-style license that can be found in the LICENSE file.
-
-// TODO: Put public facing types in this file.
 
 library pocket_client.base;
 
@@ -10,7 +7,9 @@ import 'dart:convert';
 import 'dart:async';
 
 import 'package:http/http.dart';
+
 import 'package:pocket_client/src/pocket_user.dart';
+import 'package:pocket_client/src/pocket_retrieve_options.dart';
 
 class Pocket {
   
@@ -74,8 +73,32 @@ class Pocket {
       if (response.statusCode != 200)
         _processError(response);
 
-      var pocketUser = new PocketUser.fromJSON(response.body);
-      return pocketUser;
+      return new PocketUser.fromJSON(response.body);
+    });
+  }
+
+  Future<String> getPocketData(String accessToken, {PocketRetrieveOptions options}) {
+
+    var url = '$ROOT_URL$GET_URL';
+
+    Map<String, String> body = {
+      'consumer_key': _consumerKey,
+      'access_token': accessToken
+    };
+
+    if (options !=null)
+      body.addAll(options.toMap());
+
+    var bodyJson = JSON.encode(body);
+
+    return _httpClient
+    .post(url, headers: _headers, body: bodyJson)
+    .then((Response response) {
+
+      if (response.statusCode != 200)
+        _processError(response);
+
+      return response.body;
     });
   }
 
