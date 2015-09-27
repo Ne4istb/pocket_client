@@ -1,21 +1,13 @@
-// Copyright (c) 2015, <your name>. All rights reserved. Use of this source code
+// Copyright (c) 2015, Ne4istb. All rights reserved. Use of this source code
+
 // is governed by a BSD-style license that can be found in the LICENSE file.
 
 library pocket_client.test;
 
-import 'package:pocket_client/pocket_client.dart';
-import 'package:test/test.dart';
+import 'authorization_test.dart';
+import 'pocket_user_test.dart';
 
 void main() {
-  group('A group of tests', () {
-    Awesome awesome;
-
-    setUp(() {
-      awesome = new Awesome();
-    });
-
-    test('First Test', () {
-      expect(awesome.isAwesome, isTrue);
-    });
-  });
+  AuthorizationTests.run();
+  PocketUserTests.run();
 }

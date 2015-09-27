@@ -6,6 +6,9 @@
 /// This is an awesome library. More dartdocs go here.
 library pocket_client;
 
-// TODO: Export any libraries intended for clients of this package.
-
 export 'src/pocket_client_base.dart';
+export 'src/pocket_user.dart';
+export 'src/pocket_state.dart';
+export 'src/pocket_content_type.dart';
+export 'src/pocket_detail_type.dart';
+export 'src/pocket_sort_type.dart';
