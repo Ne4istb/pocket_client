@@ -14,14 +14,14 @@ import 'package:pocket_client/src/pocket_user.dart';
 
 class PocketClientAuthorization extends PocketClientBase {
 
-	static const OAUTH_REQUEST_URL = '/v3/oauth/request';
-	static const OAUTH_TOKEN_URL = '/auth/authorize';
-	static const OAUTH_ACCESS_URL = '/v3/oauth/authorize';
+	static const oauthRequestUrl = '/v3/oauth/request';
+	static const oauthTokenUrl = '/auth/authorize';
+	static const oauthAccessUrl = '/v3/oauth/authorize';
 
 	PocketClientAuthorization(String consumerKey, [Client httpClient = null]) : super(consumerKey, httpClient);
 
 	Future<String> getRequestToken(String redirectUri) {
-		var url = '${PocketClientBase.ROOT_URL}$OAUTH_REQUEST_URL';
+		var url = '${PocketClientBase.rootUrl}$oauthRequestUrl';
 
 		Map<String, String> body = {
 			'consumer_key': consumerKey,
@@ -34,7 +34,7 @@ class PocketClientAuthorization extends PocketClientBase {
 	}
 
 	Future<PocketUser> getAccessToken(String requestToken) {
-		var url = '${PocketClientBase.ROOT_URL}$OAUTH_ACCESS_URL';
+		var url = '${PocketClientBase.rootUrl}$oauthAccessUrl';
 
 		Map<String, String> body = {
 			'consumer_key': consumerKey,
@@ -48,6 +48,6 @@ class PocketClientAuthorization extends PocketClientBase {
 
 	static String getAuthorizeUrl(String requestToken, String redirectUri) {
 		var encodedRedirectUrl = Uri.encodeQueryComponent(redirectUri);
-		return '${PocketClientBase.ROOT_URL}$OAUTH_TOKEN_URL?request_token=$requestToken&redirect_uri=$encodedRedirectUrl';
+		return '${PocketClientBase.rootUrl}$oauthTokenUrl?request_token=$requestToken&redirect_uri=$encodedRedirectUrl';
 	}
 }

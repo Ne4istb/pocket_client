@@ -238,13 +238,13 @@ class PocketDataTests {
 			test('should parse status from json', () {
 
 				var actualData = new PocketData.fromJSON('{"status": "0"}');
-				expect(actualData.status, PocketStatus.Normal);
+				expect(actualData.status, PocketStatus.normal);
 
 				actualData = new PocketData.fromJSON('{"status": "1"}');
-				expect(actualData.status, PocketStatus.Archived);
+				expect(actualData.status, PocketStatus.archived);
 
 				actualData = new PocketData.fromJSON('{"status": "2"}');
-				expect(actualData.status, PocketStatus.ToBeDeleted);
+				expect(actualData.status, PocketStatus.toBeDeleted);
 
 				actualData = new PocketData.fromJSON('{"status": ""}');
 				expect(actualData.status, null);

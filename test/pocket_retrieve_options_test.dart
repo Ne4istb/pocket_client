@@ -13,14 +13,14 @@ class PocketRetrieveOptionsTests {
       });
 
       test('should return a json with state', () {
-        var options = new PocketRetrieveOptions(state: PocketState.Unread);
+        var options = new PocketRetrieveOptions(state: PocketState.unread);
 
         expect(options.toMap(), {"state":"unread"});
 
-        options.state = PocketState.Archive;
+        options.state = PocketState.archive;
         expect(options.toMap(), {"state":"archive"});
 
-        options.state = PocketState.All;
+        options.state = PocketState.all;
         expect(options.toMap(), {"state":"all"});
       });
 
@@ -38,35 +38,35 @@ class PocketRetrieveOptionsTests {
       });
 
       test('should return a json with content type', () {
-        var options = new PocketRetrieveOptions(contentType: PocketContentType.Article);
+        var options = new PocketRetrieveOptions(contentType: PocketContentType.article);
         expect(options.toMap(), {"contentType":"article"});
 
-        options.contentType = PocketContentType.Video;
+        options.contentType = PocketContentType.video;
         expect(options.toMap(), {"contentType":"video"});
 
-        options.contentType = PocketContentType.Image;
+        options.contentType = PocketContentType.image;
         expect(options.toMap(), {"contentType":"image"});
       });
 
       test('should return a json with sort type', () {
-        var options = new PocketRetrieveOptions(sortType: PocketSortType.Newest);
+        var options = new PocketRetrieveOptions(sortType: PocketSortType.newest);
         expect(options.toMap(), {"sort":"newest"});
 
-        options.sortType = PocketSortType.Oldest;
+        options.sortType = PocketSortType.oldest;
         expect(options.toMap(), {"sort":"oldest"});
 
-        options.sortType = PocketSortType.Site;
+        options.sortType = PocketSortType.site;
         expect(options.toMap(), {"sort":"site"});
 
-        options.sortType = PocketSortType.Title;
+        options.sortType = PocketSortType.title;
         expect(options.toMap(), {"sort":"title"});
       });
 
       test('should return a json with detail type', () {
-        var options = new PocketRetrieveOptions(detailType: PocketDetailType.Simple);
+        var options = new PocketRetrieveOptions(detailType: PocketDetailType.simple);
         expect(options.toMap(), {"detailType":"simple"});
 
-        options.detailType = PocketDetailType.Complete;
+        options.detailType = PocketDetailType.complete;
         expect(options.toMap(), {"detailType":"complete"});
       });
 
@@ -101,15 +101,15 @@ class PocketRetrieveOptionsTests {
       test('should return json with all options', () {
         var options = new PocketRetrieveOptions()
           ..since = new DateTime(2015, 5, 4)
-          ..contentType = PocketContentType.Video
+          ..contentType = PocketContentType.video
           ..count = 100
           ..offset = 10
-          ..detailType = PocketDetailType.Complete
+          ..detailType = PocketDetailType.complete
           ..domain = 'http://domain.test'
           ..search = 'Some search query'
           ..isFavorite = true
-          ..sortType = PocketSortType.Site
-          ..state = PocketState.Archive
+          ..sortType = PocketSortType.site
+          ..state = PocketState.archive
           ..tag = 'cats';
 
         var expected = {

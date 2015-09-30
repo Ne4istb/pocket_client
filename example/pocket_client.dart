@@ -21,7 +21,7 @@ main() {
 
 	var options = new PocketRetrieveOptions()
 		..count = 100
-		..detailType = PocketDetailType.Complete
+		..detailType = PocketDetailType.complete
 		..tag = 'digest';
 	pocket.getPocketData('cfd6484b-0f8f-87e7-5aee-c55c12', options: options).then((r){
 		print(r);

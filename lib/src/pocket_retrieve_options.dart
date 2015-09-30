@@ -65,44 +65,44 @@ class PocketRetrieveOptions {
 
   String _getStateValueString(PocketState state){
     switch (state){
-      case PocketState.Unread:
+      case PocketState.unread:
         return 'unread';
-      case PocketState.All:
+      case PocketState.all:
         return 'all';
-      case PocketState.Archive:
+      case PocketState.archive:
         return 'archive';
     }
   }
 
   String _getContentTypeString(PocketContentType contentType){
     switch (contentType){
-      case PocketContentType.Article:
+      case PocketContentType.article:
         return 'article';
-      case PocketContentType.Video:
+      case PocketContentType.video:
         return 'video';
-      case PocketContentType.Image:
+      case PocketContentType.image:
         return 'image';
     }
   }
 
   String _getSortTypeString(PocketSortType sortType){
     switch (sortType){
-      case PocketSortType.Newest:
+      case PocketSortType.newest:
         return 'newest';
-      case PocketSortType.Oldest:
+      case PocketSortType.oldest:
         return 'oldest';
-      case PocketSortType.Site:
+      case PocketSortType.site:
         return 'site';
-      case PocketSortType.Title:
+      case PocketSortType.title:
         return 'title';
     }
   }
 
   String _getDetailTypeString(PocketDetailType detailtype){
     switch (detailtype){
-      case PocketDetailType.Complete:
+      case PocketDetailType.complete:
         return 'complete';
-      case PocketDetailType.Simple:
+      case PocketDetailType.simple:
         return 'simple';
     }
   }

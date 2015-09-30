@@ -11,21 +11,20 @@ import 'package:http/http.dart';
 
 import 'package:pocket_client/src/pocket_client_base.dart';
 
-import 'package:pocket_client/src/pocket_user.dart';
 import 'package:pocket_client/src/pocket_retrieve_options.dart';
 import 'package:pocket_client/src/pocket_response.dart';
 
 class PocketClient extends PocketClientBase {
 
-	static const ADD_URL = '/v3/add';
-	static const SEND_URL = '/v3/send';
-	static const GET_URL = '/v3/get';
+	static const addUrl = '/v3/add';
+	static const sendUrl = '/v3/send';
+	static const getUrl = '/v3/get';
 
 	PocketClient(String consumerKey, [Client httpClient = null]) : super(consumerKey, httpClient);
 
 	Future<PocketResponse> getPocketData(String accessToken, {PocketRetrieveOptions options}) {
 
-		var url = '${PocketClientBase.ROOT_URL}$GET_URL';
+		var url = '${PocketClientBase.rootUrl}$getUrl';
 
 		Map<String, String> body = {
 			'consumer_key': consumerKey,

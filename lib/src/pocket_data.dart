@@ -104,11 +104,11 @@ class PocketData {
 
 		switch (statusString) {
 			case '0':
-				return PocketStatus.Normal;
+				return PocketStatus.normal;
 			case '1':
-				return PocketStatus.Archived;
+				return PocketStatus.archived;
 			case '2':
-				return PocketStatus.ToBeDeleted;
+				return PocketStatus.toBeDeleted;
 			default:
 				throw new ArgumentError('Unknown pocket data status $statusString');
 		}

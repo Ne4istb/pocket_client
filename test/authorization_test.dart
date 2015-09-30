@@ -23,7 +23,7 @@ class AuthorizationTests{
 
         var response = new Response('{"code":"$requestCode"}', 200);
 
-        var url = '${PocketClientBase.ROOT_URL}${PocketClientAuthorization.OAUTH_REQUEST_URL}';
+        var url = '${PocketClientBase.rootUrl}${PocketClientAuthorization.oauthRequestUrl}';
 
         var client = Mocks.httpClient(response, url, (String body) {
 	        var json = JSON.decode(body);
@@ -51,7 +51,7 @@ class AuthorizationTests{
 
         var response = new Response('{"access_token":"$accessToken","username":"$userName"}', 200);
 
-        var url = '${PocketClientBase.ROOT_URL}${PocketClientAuthorization.OAUTH_ACCESS_URL}';
+        var url = '${PocketClientBase.rootUrl}${PocketClientAuthorization.oauthAccessUrl}';
 
         var client = Mocks.httpClient(response, url, (String body) {
 	        var json = JSON.decode(body);

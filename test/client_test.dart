@@ -32,7 +32,7 @@ class ClientTests {
 		var response = new Response(responseJson, 200);
 
 		group('getPocketData()', () {
-			final url = '${PocketClientBase.ROOT_URL}${PocketClient.GET_URL}';
+			final url = '${PocketClientBase.rootUrl}${PocketClient.getUrl}';
 
 			test('should return data (without request options)', () {
 
@@ -51,15 +51,15 @@ class ClientTests {
 
 				var options = new PocketRetrieveOptions()
 					..since = new DateTime(2015, 5, 4)
-					..contentType = PocketContentType.Video
+					..contentType = PocketContentType.video
 					..count = 100
 					..offset = 10
-					..detailType = PocketDetailType.Complete
+					..detailType = PocketDetailType.complete
 					..domain = 'http://domain.test'
 					..search = 'Some search query'
 					..isFavorite = true
-					..sortType = PocketSortType.Site
-					..state = PocketState.Archive
+					..sortType = PocketSortType.site
+					..state = PocketState.archive
 					..tag = 'cats';
 
 				var client = Mocks.httpClient(response, url, (String body) {

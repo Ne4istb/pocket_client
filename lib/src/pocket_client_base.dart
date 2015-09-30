@@ -5,7 +5,7 @@ import 'package:http/http.dart';
 
 abstract class PocketClientBase {
 
-	static final ROOT_URL = 'https://getpocket.com';
+	static final rootUrl = 'https://getpocket.com';
 
 	final Map<String, String> headers = {
 		'Content-Type': 'application/json; charset=UTF-8',
@@ -20,10 +20,9 @@ abstract class PocketClientBase {
 	}
 
 	Future<Response> httpPost(String url, String body) {
-
 		return _httpClient.post(url, headers: headers, body: body).then((Response response) {
 
-				if (response.statusCode != 200)
+			if (response.statusCode != 200)
 				_processError(response);
 
 			return response;
