@@ -34,29 +34,35 @@ class PocketData {
 		this.isFavorite, this.status, this.excerpt, this.isArticle, this.isImage, this.isVideo, this.hasImages,
 		this.hasVideos, this.wordCount, this.tags, this.authors, this.images, this.videos});
 
+	PocketData.fromMap(Map map) {
+		_initFromMap(map);
+	}
+
 	PocketData.fromJSON(String jsonString) {
-
 		Map json = JSON.decode(jsonString);
+		_initFromMap(json);
+	}
 
-		itemId = json['item_id'];
-		resolvedId = json['resolved_id'];
-		givenUrl = json['given_url'];
-		resolvedUrl = json['resolved_url'];
-		givenTitle = json['given_title'];
-		resolvedTitle = json['resolved_title'];
-		isFavorite = json['favorite'] == '1';
-		status = _convertToPocketStatus(json['status']);
-		excerpt = json['excerpt'];
-		isArticle = json['is_article'] == '1';
-		isImage = json['has_image'] == '2';
-		isVideo = json['has_video'] == '2';
-		hasImages = json['has_image'] == '1';
-		hasVideos = json['has_video'] == '1';
-		wordCount = json['word_count'] != null ? int.parse(json['word_count']) : null;
-		tags = _convertToTags(json['tags']);
-		authors = _convertToAuthors(json['authors']);
-		images = _convertToImages(json['images']);
-		videos = _convertToVideos(json['videos']);
+	_initFromMap(map){
+		itemId = map['item_id'];
+		resolvedId = map['resolved_id'];
+		givenUrl = map['given_url'];
+		resolvedUrl = map['resolved_url'];
+		givenTitle = map['given_title'];
+		resolvedTitle = map['resolved_title'];
+		isFavorite = map['favorite'] == '1';
+		status = _convertToPocketStatus(map['status']);
+		excerpt = map['excerpt'];
+		isArticle = map['is_article'] == '1';
+		isImage = map['has_image'] == '2';
+		isVideo = map['has_video'] == '2';
+		hasImages = map['has_image'] == '1';
+		hasVideos = map['has_video'] == '1';
+		wordCount = map['word_count'] != null ? int.parse(map['word_count']) : null;
+		tags = _convertToTags(map['tags']);
+		authors = _convertToAuthors(map['authors']);
+		images = _convertToImages(map['images']);
+		videos = _convertToVideos(map['videos']);
 	}
 
 	List<PocketTag> _convertToTags(data) {

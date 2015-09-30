@@ -6,6 +6,8 @@
 library pocket_client;
 
 export 'src/pocket_client_base.dart';
+export 'src/pocket_client.dart';
+export 'src/pocket_client_authorization.dart';
 export 'src/pocket_user.dart';
 export 'src/pocket_data.dart';
 export 'src/pocket_video_data.dart';
@@ -18,3 +20,4 @@ export 'src/pocket_status.dart';
 export 'src/pocket_content_type.dart';
 export 'src/pocket_detail_type.dart';
 export 'src/pocket_sort_type.dart';
+export 'src/pocket_response.dart';
