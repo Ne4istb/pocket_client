@@ -131,3 +131,7 @@ class PocketRetrieveOptionsTests {
     });
   }
 }
+
+void main() {
+	PocketRetrieveOptionsTests.run();
+}

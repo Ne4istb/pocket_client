@@ -18,3 +18,7 @@ class PocketUserTests {
     });
   }
 }
+
+void main() {
+	PocketUserTests.run();
+}

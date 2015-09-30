@@ -157,3 +157,7 @@ class AuthorizationTests{
     });
   }
 }
+
+void main() {
+	AuthorizationTests.run();
+}
