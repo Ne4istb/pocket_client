@@ -13,6 +13,7 @@ class ClientTests {
 	static run() {
 		const consumerKey = '1234-abcd1234abcd1234abcd1234';
 		const accessToken = '5678defg-5678-defg-5678-defg56';
+
 		const responseJson = '''
 				{
 				  "status": 1,
@@ -31,11 +32,19 @@ class ClientTests {
 
 		var response = new Response(responseJson, 200);
 
-		group('getPocketData()', () {
+		const actionResultsJson = '{"status": 0, "action_results":[true, false,true]}';
+
+		assertActionResults(PocketActionResults result) {
+			expect(result.hasErrors, true);
+			expect(result.results, [true, false, true]);
+		}
+
+		var actionResultsResponse = new Response(actionResultsJson, 200);
+
+		group('Get data.', () {
 			final url = '${PocketClientBase.rootUrl}${PocketClient.getSubUrl}';
 
 			test('should return data (without request options)', () {
-
 				var client = Mocks.httpClient(response, url, (String body) {
 					Map json = JSON.decode(body);
 					expect(json.length, 2);
@@ -48,7 +57,6 @@ class ClientTests {
 			});
 
 			test('should return data (with options)', () {
-
 				var options = new PocketRetrieveOptions()
 					..since = new DateTime(2015, 5, 4)
 					..contentType = PocketContentType.video
@@ -63,7 +71,6 @@ class ClientTests {
 					..tag = 'cats';
 
 				var client = Mocks.httpClient(response, url, (String body) {
-
 					Map json = JSON.decode(body);
 
 					expect(json.length, 13);
@@ -85,19 +92,15 @@ class ClientTests {
 				var pocket = new PocketClient(consumerKey, accessToken, client);
 				pocket.getPocketData(options: options).then(assertResponse);
 			});
-
 		});
 
-		group('addItem()', () {
-
+		group('Add item.', () {
 			final url = '${PocketClientBase.rootUrl}${PocketClient.addSubUrl}';
 
 			test('should add url and return created item', () {
-
 				var newUrl = 'http://test.com/';
 
 				var client = Mocks.httpClient(response, url, (String body) {
-
 					Map json = JSON.decode(body);
 
 					expect(json.length, 3);
@@ -111,14 +114,12 @@ class ClientTests {
 			});
 
 			test('should add item and return created item', () {
-
-				var newItem =  new PocketItemToAdd('http://test.com/')
+				var newItem = new PocketItemToAdd('http://test.com/')
 					..title = 'Test title'
 					..tweetId = '123456'
-					..tags = ['first','second', 'last'];
+					..tags = ['first', 'second', 'last'];
 
 				var client = Mocks.httpClient(response, url, (String body) {
-
 					Map json = JSON.decode(body);
 
 					expect(json.length, 6);
@@ -134,7 +135,175 @@ class ClientTests {
 				var pocket = new PocketClient(consumerKey, accessToken, client);
 				pocket.addItem(newItem).then(assertResponse);
 			});
+		});
 
+		group('Actions.', () {
+			final url = '${PocketClientBase.rootUrl}${PocketClient.sendSubUrl}';
+
+			test('should send actions', () {
+				var actions = [
+					new PocketDeleteAction(12340, time: new DateTime.fromMillisecondsSinceEpoch(1430686800000)),
+					new PocketArchiveAction(12341, time: new DateTime.fromMillisecondsSinceEpoch(1430686800001)),
+					new PocketFavoriteAction(12342, time: new DateTime.fromMillisecondsSinceEpoch(1430686800002))
+				];
+
+				var client = Mocks.httpClient(actionResultsResponse, url, (String body) {
+					Map json = JSON.decode(body);
+
+					expect(json.length, 3);
+					expect(json['consumer_key'], consumerKey, reason: 'consumer_key');
+					expect(json['access_token'], accessToken, reason: 'access_token');
+
+					var actionsJson = json['actions'];
+					expect(actionsJson.length, 3, reason: 'actions length');
+					expect(actionsJson[0]['action'], 'delete', reason: 'actions delete');
+					expect(actionsJson[0]['item_id'], '12340', reason: 'actions delete');
+					expect(actionsJson[0]['time'], '1430686800000', reason: 'actions delete');
+
+					expect(actionsJson[1]['action'], 'archive', reason: 'actions archive');
+					expect(actionsJson[1]['item_id'], '12341', reason: 'actions archive');
+					expect(actionsJson[1]['time'], '1430686800001', reason: 'actions archive');
+
+					expect(actionsJson[2]['action'], 'favorite', reason: 'actions favorite');
+					expect(actionsJson[2]['item_id'], '12342', reason: 'actions favorite');
+					expect(actionsJson[2]['time'], '1430686800002', reason: 'actions favorite');
+				});
+
+				var pocket = new PocketClient(consumerKey, accessToken, client);
+				pocket.modify(actions).then(assertActionResults);
+			});
+
+			test('should archive item', () {
+
+				var client = Mocks.httpClient(actionResultsResponse, url, (String body) {
+
+					Map json = JSON.decode(body);
+
+					expect(json.length, 3);
+					expect(json['consumer_key'], consumerKey, reason: 'consumer_key');
+					expect(json['access_token'], accessToken, reason: 'access_token');
+
+					var actionsJson = json['actions'];
+
+					expect(actionsJson.length, 1, reason: 'actions length');
+					expect(actionsJson[0]['action'], 'archive', reason: 'actions archive');
+					expect(actionsJson[0]['item_id'], '12341', reason: 'actions archive');
+					expect(actionsJson[0]['time'], '1430686800001', reason: 'actions archive');
+				});
+
+				var pocket = new PocketClient(consumerKey, accessToken, client);
+				pocket.archive(12341, time: new DateTime.fromMillisecondsSinceEpoch(1430686800001)).then(assertActionResults);
+			});
+
+			test('should delete item', () {
+
+				var client = Mocks.httpClient(actionResultsResponse, url, (String body) {
+
+					Map json = JSON.decode(body);
+
+					expect(json.length, 3);
+					expect(json['consumer_key'], consumerKey, reason: 'consumer_key');
+					expect(json['access_token'], accessToken, reason: 'access_token');
+
+					var actionsJson = json['actions'];
+
+					expect(actionsJson.length, 1, reason: 'actions length');
+					expect(actionsJson[0]['action'], 'delete', reason: 'actions delete');
+					expect(actionsJson[0]['item_id'], '12342', reason: 'actions delete');
+					expect(actionsJson[0]['time'], '1430686800002', reason: 'actions delete');
+				});
+
+				var pocket = new PocketClient(consumerKey, accessToken, client);
+				pocket.delete(12342, time: new DateTime.fromMillisecondsSinceEpoch(1430686800002)).then(assertActionResults);
+			});
+
+			test('should favorite item', () {
+
+				var client = Mocks.httpClient(actionResultsResponse, url, (String body) {
+
+					Map json = JSON.decode(body);
+
+					expect(json.length, 3);
+					expect(json['consumer_key'], consumerKey, reason: 'consumer_key');
+					expect(json['access_token'], accessToken, reason: 'access_token');
+
+					var actionsJson = json['actions'];
+
+					expect(actionsJson.length, 1, reason: 'actions length');
+					expect(actionsJson[0]['action'], 'favorite', reason: 'actions favorite');
+					expect(actionsJson[0]['item_id'], '12343', reason: 'actions favorite');
+					expect(actionsJson[0]['time'], '1430686800003', reason: 'actions favorite');
+				});
+
+				var pocket = new PocketClient(consumerKey, accessToken, client);
+				pocket.favorite(12343, time: new DateTime.fromMillisecondsSinceEpoch(1430686800003)).then(assertActionResults);
+			});
+
+			test('should unfavorite item', () {
+
+				var client = Mocks.httpClient(actionResultsResponse, url, (String body) {
+
+					Map json = JSON.decode(body);
+
+					expect(json.length, 3);
+					expect(json['consumer_key'], consumerKey, reason: 'consumer_key');
+					expect(json['access_token'], accessToken, reason: 'access_token');
+
+					var actionsJson = json['actions'];
+
+					expect(actionsJson.length, 1, reason: 'actions length');
+					expect(actionsJson[0]['action'], 'unfavorite', reason: 'actions unfavorite');
+					expect(actionsJson[0]['item_id'], '12344', reason: 'actions unfavorite');
+					expect(actionsJson[0]['time'], '1430686800004', reason: 'actions unfavorite');
+				});
+
+				var pocket = new PocketClient(consumerKey, accessToken, client);
+				pocket.unFavorite(12344, time: new DateTime.fromMillisecondsSinceEpoch(1430686800004)).then(assertActionResults);
+			});
+
+			test('should readd item', () {
+
+				var client = Mocks.httpClient(actionResultsResponse, url, (String body) {
+
+					Map json = JSON.decode(body);
+
+					expect(json.length, 3);
+					expect(json['consumer_key'], consumerKey, reason: 'consumer_key');
+					expect(json['access_token'], accessToken, reason: 'access_token');
+
+					var actionsJson = json['actions'];
+
+					expect(actionsJson.length, 1, reason: 'actions length');
+					expect(actionsJson[0]['action'], 'readd', reason: 'actions readd');
+					expect(actionsJson[0]['item_id'], '12345', reason: 'actions readd');
+					expect(actionsJson[0]['time'], '1430686800005', reason: 'actions readd');
+				});
+
+				var pocket = new PocketClient(consumerKey, accessToken, client);
+				pocket.reAdd(12345, time: new DateTime.fromMillisecondsSinceEpoch(1430686800005)).then(assertActionResults);
+			});
+
+			test('should tags clear item', () {
+
+				var client = Mocks.httpClient(actionResultsResponse, url, (String body) {
+
+					Map json = JSON.decode(body);
+
+					expect(json.length, 3);
+					expect(json['consumer_key'], consumerKey, reason: 'consumer_key');
+					expect(json['access_token'], accessToken, reason: 'access_token');
+
+					var actionsJson = json['actions'];
+
+					expect(actionsJson.length, 1, reason: 'actions length');
+					expect(actionsJson[0]['action'], 'tags_clear', reason: 'actions tags_clear');
+					expect(actionsJson[0]['item_id'], '12346', reason: 'actions tags_clear');
+					expect(actionsJson[0]['time'], '1430686800006', reason: 'actions tags_clear');
+				});
+
+				var pocket = new PocketClient(consumerKey, accessToken, client);
+				pocket.clearTags(12346, time: new DateTime.fromMillisecondsSinceEpoch(1430686800006)).then(assertActionResults);
+			});
 		});
 	}
 }

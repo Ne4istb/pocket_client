@@ -16,6 +16,7 @@ import 'pocket_image_data_test.dart';
 import 'pocket_retrieve_options_test.dart';
 import 'pocket_response_test.dart';
 import 'pocket_item_to_add_test.dart';
+import 'pocket_actions_test.dart';
 
 void main() {
   AuthorizationTests.run();
@@ -30,4 +31,5 @@ void main() {
   PocketAuthorTests.run();
   PocketResponseTests.run();
   PocketItemToAddTests.run();
+  PocketActionsTests.run();
 }

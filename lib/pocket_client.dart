@@ -22,3 +22,4 @@ export 'src/pocket_detail_type.dart';
 export 'src/pocket_sort_type.dart';
 export 'src/pocket_response.dart';
 export 'src/pocket_item_to_add.dart';
+export 'src/pocket_actions.dart';
