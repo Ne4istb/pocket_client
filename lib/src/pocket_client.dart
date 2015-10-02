@@ -17,41 +17,37 @@ import 'package:pocket_client/src/pocket_response.dart';
 
 class PocketClient extends PocketClientBase {
 
-	static const addUrl = '/v3/add';
-	static const sendUrl = '/v3/send';
-	static const getUrl = '/v3/get';
+	static const addSubUrl = '/v3/add';
+	static const sendSubUrl = '/v3/send';
+	static const getSubUrl = '/v3/get';
 
 	String accessToken;
 
 	PocketClient(String consumerKey, this.accessToken, [Client httpClient = null]) : super(consumerKey, httpClient);
 
 	Future<PocketResponse> getPocketData({PocketRetrieveOptions options}) {
-
-		var url = '${PocketClientBase.rootUrl}$getUrl';
-
-		Map<String, String> body = {
-			'consumer_key': consumerKey,
-			'access_token': accessToken
-		};
-
-		if (options != null)
-			body.addAll(options.toMap());
-
-		var bodyJson = JSON.encode(body);
-
-		return httpPost(url, bodyJson).then((Response response) => new PocketResponse.fromJSON(response.body));
+		return  _post(getSubUrl, options?.toMap());
 	}
 
 	Future<PocketResponse> addItem(PocketItemToAdd newItem) {
+		return _post(addSubUrl, newItem?.toMap());
+	}
 
-		var url = '${PocketClientBase.rootUrl}$addUrl';
+	Future<PocketResponse> addUrl(String newUrl) {
+		return _post(addSubUrl, {'url': Uri.encodeFull(newUrl)});
+	}
+
+	Future<PocketResponse> _post(String subUrl, Map<String,String> options){
+
+		var url = '${PocketClientBase.rootUrl}$subUrl';
 
 		Map<String, String> body = {
 			'consumer_key': consumerKey,
 			'access_token': accessToken
 		};
 
-		body.addAll(newItem.toMap());
+		if (options!=null)
+			body.addAll(options);
 
 		var bodyJson = JSON.encode(body);
 

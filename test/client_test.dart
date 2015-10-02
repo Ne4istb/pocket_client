@@ -32,7 +32,7 @@ class ClientTests {
 		var response = new Response(responseJson, 200);
 
 		group('getPocketData()', () {
-			final url = '${PocketClientBase.rootUrl}${PocketClient.getUrl}';
+			final url = '${PocketClientBase.rootUrl}${PocketClient.getSubUrl}';
 
 			test('should return data (without request options)', () {
 
@@ -89,9 +89,28 @@ class ClientTests {
 		});
 
 		group('addItem()', () {
-			final url = '${PocketClientBase.rootUrl}${PocketClient.addUrl}';
 
-			test('should create item and return created item', () {
+			final url = '${PocketClientBase.rootUrl}${PocketClient.addSubUrl}';
+
+			test('should add url and return created item', () {
+
+				var newUrl = 'http://test.com/';
+
+				var client = Mocks.httpClient(response, url, (String body) {
+
+					Map json = JSON.decode(body);
+
+					expect(json.length, 3);
+					expect(json['consumer_key'], consumerKey, reason: 'consumer_key');
+					expect(json['access_token'], accessToken, reason: 'access_token');
+					expect(json['url'], 'http://test.com/', reason: 'url');
+				});
+
+				var pocket = new PocketClient(consumerKey, accessToken, client);
+				pocket.addUrl(newUrl).then(assertResponse);
+			});
+
+			test('should add item and return created item', () {
 
 				var newItem =  new PocketItemToAdd('http://test.com/')
 					..title = 'Test title'
