@@ -43,8 +43,8 @@ class ClientTests {
 					expect(json['access_token'], accessToken);
 				});
 
-				var pocket = new PocketClient(consumerKey, client);
-				pocket.getPocketData(accessToken).then(assertResponse);
+				var pocket = new PocketClient(consumerKey, accessToken, client);
+				pocket.getPocketData().then(assertResponse);
 			});
 
 			test('should return data (with options)', () {
@@ -82,8 +82,38 @@ class ClientTests {
 					expect(json['since'], '1430686800000', reason: 'domain');
 				});
 
-				var pocket = new PocketClient(consumerKey, client);
-				pocket.getPocketData(accessToken, options: options).then(assertResponse);
+				var pocket = new PocketClient(consumerKey, accessToken, client);
+				pocket.getPocketData(options: options).then(assertResponse);
+			});
+
+		});
+
+		group('addItem()', () {
+			final url = '${PocketClientBase.rootUrl}${PocketClient.addUrl}';
+
+			test('should create item and return created item', () {
+
+				var newItem =  new PocketItemToAdd('http://test.com/')
+					..title = 'Test title'
+					..tweetId = '123456'
+					..tags = ['first','second', 'last'];
+
+				var client = Mocks.httpClient(response, url, (String body) {
+
+					Map json = JSON.decode(body);
+
+					expect(json.length, 6);
+					expect(json['consumer_key'], consumerKey, reason: 'consumer_key');
+					expect(json['access_token'], accessToken, reason: 'access_token');
+
+					expect(json['url'], 'http://test.com/', reason: 'url');
+					expect(json['title'], 'Test%20title', reason: 'title');
+					expect(json['tweet_id'], '123456', reason: 'tweet_id');
+					expect(json['tags'], 'first, second, last', reason: 'tags');
+				});
+
+				var pocket = new PocketClient(consumerKey, accessToken, client);
+				pocket.addItem(newItem).then(assertResponse);
 			});
 
 		});
