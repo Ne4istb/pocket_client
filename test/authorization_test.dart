@@ -1,6 +1,6 @@
 library pocket_client.authorization_test;
 
-import 'package:pocket_client/pocket_client.dart';
+import 'package:pocket_client/pocket_client.dart' as pocket;
 import 'package:test/test.dart';
 
 import 'dart:convert';
@@ -23,7 +23,7 @@ class AuthorizationTests{
 
         var response = new Response('{"code":"$requestCode"}', 200);
 
-        var url = '${PocketClientBase.rootUrl}${PocketClientAuthorization.oauthRequestUrl}';
+        var url = '${pocket.ClientBase.rootUrl}${pocket.ClientAuthorization.oauthRequestUrl}';
 
         var client = Mocks.httpClient(response, url, (String body) {
 	        var json = JSON.decode(body);
@@ -31,9 +31,9 @@ class AuthorizationTests{
 	        expect(json['redirect_uri'], redirectUri);
         });
 
-        var pocket = new PocketClientAuthorization(consumer_key, client);
+        var pocketClient = new pocket.ClientAuthorization(consumer_key, client);
 
-        pocket.getRequestToken(redirectUri).then((result) {
+        pocketClient.getRequestToken(redirectUri).then((result) {
           expect(result, requestCode);
         });
       });
@@ -51,7 +51,7 @@ class AuthorizationTests{
 
         var response = new Response('{"access_token":"$accessToken","username":"$userName"}', 200);
 
-        var url = '${PocketClientBase.rootUrl}${PocketClientAuthorization.oauthAccessUrl}';
+        var url = '${pocket.ClientBase.rootUrl}${pocket.ClientAuthorization.oauthAccessUrl}';
 
         var client = Mocks.httpClient(response, url, (String body) {
 	        var json = JSON.decode(body);
@@ -59,10 +59,10 @@ class AuthorizationTests{
 	        expect(json['code'], requestCode);
         });
 
-        var pocket = new PocketClientAuthorization(consumer_key, client);
+        var pocketClient = new pocket.ClientAuthorization(consumer_key, client);
 
-        pocket.getAccessToken(requestCode).then((result) {
-          expect(result is PocketUser, isTrue);
+        pocketClient.getAccessToken(requestCode).then((result) {
+          expect(result is pocket.User, isTrue);
           expect(result.userName, userName);
           expect(result.accessToken, accessToken);
         });
@@ -76,7 +76,7 @@ class AuthorizationTests{
         const redirectUri = 'http://som_redirect_uri?test=me';
         const requestCode = 'dcba4321-dcba-4321-dcba-4321dc';
 
-        var actualUrl = PocketClientAuthorization.getAuthorizeUrl(requestCode, redirectUri);
+        var actualUrl = pocket.ClientAuthorization.getAuthorizeUrl(requestCode, redirectUri);
 
         expect(actualUrl, 'https://getpocket.com/auth/authorize?request_token=dcba4321-dcba-4321-dcba-4321dc&redirect_uri=http%3A%2F%2Fsom_redirect_uri%3Ftest%3Dme');
       });

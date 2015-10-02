@@ -3,9 +3,9 @@ library pocket_client.video_data_test;
 import 'package:pocket_client/pocket_client.dart';
 import 'package:test/test.dart';
 
-class PocketVideoDataTests {
+class VideoDataTests {
 	static run() {
-		group('PocketVideoData.fromJSON()', () {
+		group('VideoData.fromJSON()', () {
 			test('should create object from json', () {
 				String json = '''
 		    {
@@ -18,7 +18,7 @@ class PocketVideoDataTests {
 		      "vid": "Er34PbFkVGk"
 				}''';
 
-				var actualData = new PocketVideoData.fromJSON(json);
+				var actualData = new VideoData.fromJSON(json);
 
 				expect(actualData.itemId, '229279689', reason: 'itemId');
 				expect(actualData.videoId, '1', reason: 'videoId');
@@ -31,28 +31,28 @@ class PocketVideoDataTests {
 
 			test('should parse type from json', () {
 
-				var actualData = new PocketVideoData.fromJSON('{"type": "123"}');
+				var actualData = new VideoData.fromJSON('{"type": "123"}');
 				expect(actualData.type, 123);
 
-				actualData = new PocketVideoData.fromJSON('{}');
+				actualData = new VideoData.fromJSON('{}');
 				expect(actualData.type, null);
 			});
 
 			test('should parse width from json', () {
 
-				var actualData = new PocketVideoData.fromJSON('{"width": "123"}');
+				var actualData = new VideoData.fromJSON('{"width": "123"}');
 				expect(actualData.width, 123);
 
-				actualData = new PocketVideoData.fromJSON('{}');
+				actualData = new VideoData.fromJSON('{}');
 				expect(actualData.width, null);
 			});
 
 			test('should parse height from json', () {
 
-				var actualData = new PocketVideoData.fromJSON('{"height": "123"}');
+				var actualData = new VideoData.fromJSON('{"height": "123"}');
 				expect(actualData.height, 123);
 
-				actualData = new PocketVideoData.fromJSON('{}');
+				actualData = new VideoData.fromJSON('{}');
 				expect(actualData.height, null);
 			});
 		});
@@ -60,5 +60,5 @@ class PocketVideoDataTests {
 }
 
 void main() {
-	PocketVideoDataTests.run();
+	VideoDataTests.run();
 }

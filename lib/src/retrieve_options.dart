@@ -1,26 +1,22 @@
 library pocket_client.retreive_options;
 
-import 'dart:convert';
-import 'package:pocket_client/src/pocket_state.dart';
-import 'package:pocket_client/src/pocket_content_type.dart';
-import 'package:pocket_client/src/pocket_sort_type.dart';
-import 'package:pocket_client/src/pocket_detail_type.dart';
+import 'package:pocket_client/src/enums.dart';
 
-class PocketRetrieveOptions {
+class RetrieveOptions {
 
-  PocketState state;
+  State state;
   bool isFavorite;
   String tag;
-  PocketContentType contentType;
-  PocketSortType sortType;
-  PocketDetailType detailType;
+  ContentType contentType;
+  SortType sortType;
+  DetailType detailType;
   String search;
   String domain;
   DateTime since;
   int count;
   int offset;
 
-  PocketRetrieveOptions({this.state, this.isFavorite, this.tag, this.contentType, this.sortType, this.detailType,
+  RetrieveOptions({this.state, this.isFavorite, this.tag, this.contentType, this.sortType, this.detailType,
   this.search, this.domain, this.since, this.count, this.offset});
 
   Map<String,String> toMap(){
@@ -63,46 +59,46 @@ class PocketRetrieveOptions {
     return result;
   }
 
-  String _getStateValueString(PocketState state){
+  String _getStateValueString(State state){
     switch (state){
-      case PocketState.unread:
+      case State.unread:
         return 'unread';
-      case PocketState.all:
+      case State.all:
         return 'all';
-      case PocketState.archive:
+      case State.archive:
         return 'archive';
     }
   }
 
-  String _getContentTypeString(PocketContentType contentType){
+  String _getContentTypeString(ContentType contentType){
     switch (contentType){
-      case PocketContentType.article:
+      case ContentType.article:
         return 'article';
-      case PocketContentType.video:
+      case ContentType.video:
         return 'video';
-      case PocketContentType.image:
+      case ContentType.image:
         return 'image';
     }
   }
 
-  String _getSortTypeString(PocketSortType sortType){
+  String _getSortTypeString(SortType sortType){
     switch (sortType){
-      case PocketSortType.newest:
+      case SortType.newest:
         return 'newest';
-      case PocketSortType.oldest:
+      case SortType.oldest:
         return 'oldest';
-      case PocketSortType.site:
+      case SortType.site:
         return 'site';
-      case PocketSortType.title:
+      case SortType.title:
         return 'title';
     }
   }
 
-  String _getDetailTypeString(PocketDetailType detailtype){
+  String _getDetailTypeString(DetailType detailtype){
     switch (detailtype){
-      case PocketDetailType.complete:
+      case DetailType.complete:
         return 'complete';
-      case PocketDetailType.simple:
+      case DetailType.simple:
         return 'simple';
     }
   }

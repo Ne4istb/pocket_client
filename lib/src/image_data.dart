@@ -2,7 +2,7 @@ library pocket_client.image_data;
 
 import 'dart:convert';
 
-class PocketImageData {
+class ImageData {
 
 	String itemId;
 	String imageId;
@@ -12,14 +12,14 @@ class PocketImageData {
 	String credit;
 	String caption;
 
-	PocketImageData(this.itemId, this.imageId, this.sourceUrl,{ this.width, this.height, this.credit, this.caption});
+	ImageData(this.itemId, this.imageId, this.sourceUrl,{ this.width, this.height, this.credit, this.caption});
 
-	PocketImageData.fromJSON(String jsonString) {
+	ImageData.fromJSON(String jsonString) {
     Map json = JSON.decode(jsonString);
     _initFromMap(json);
   }
 
-	PocketImageData.fromMap(Map<String, String> map) {
+	ImageData.fromMap(Map<String, String> map) {
 		_initFromMap(map);
 	}
 

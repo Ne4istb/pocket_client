@@ -1,13 +1,13 @@
 library pocket_client.item_to_add;
 
-class PocketItemToAdd {
+class ItemToAdd {
 
 	String url;
 	String title;
 	List<String> tags;
 	String tweetId;
 
-	PocketItemToAdd(this.url, {this.title, this.tags, this.tweetId});
+	ItemToAdd(this.url, {this.title, this.tags, this.tweetId});
 
 	Map<String, String> toMap() {
 		Map<String, String> result = {};

@@ -2,16 +2,16 @@ library pocket_client.tag;
 
 import 'dart:convert';
 
-class PocketTag {
+class Tag {
 
   String itemId;
   String tag;
 
-  PocketTag.fromMap(Map<String, String> map) {
+  Tag.fromMap(Map<String, String> map) {
 	  _initFromMap(map);
   }
 
-  PocketTag.fromJSON(String jsonString) {
+  Tag.fromJSON(String jsonString) {
     Map json = JSON.decode(jsonString);
     _initFromMap(json);
   }

@@ -3,10 +3,10 @@ library pocket_client.author_test;
 import 'package:pocket_client/pocket_client.dart';
 import 'package:test/test.dart';
 
-class PocketAuthorTests {
+class AuthorTests {
 
   static run() {
-    test('PocketAuthor. Should convert json string to pocket tag data', () {
+    test('Author. Should convert json string to pocket tag data', () {
 
       const json = '''
       {
@@ -17,7 +17,7 @@ class PocketAuthorTests {
       }
       ''';
 
-      var actualData = new PocketAuthor.fromJSON(json);
+      var actualData = new Author.fromJSON(json);
 
       expect(actualData.itemId, '1033645339');
       expect(actualData.authorId, '33265953');
@@ -28,5 +28,5 @@ class PocketAuthorTests {
 }
 
 void main() {
-	PocketAuthorTests.run();
+	AuthorTests.run();
 }

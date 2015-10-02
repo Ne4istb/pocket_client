@@ -5,21 +5,17 @@
 
 library pocket_client;
 
-export 'src/pocket_client_base.dart';
-export 'src/pocket_client.dart';
-export 'src/pocket_client_authorization.dart';
-export 'src/pocket_user.dart';
+export 'src/client_base.dart';
+export 'src/client.dart';
+export 'src/client_authorization.dart';
+export 'src/user.dart';
 export 'src/pocket_data.dart';
-export 'src/pocket_video_data.dart';
-export 'src/pocket_image_data.dart';
-export 'src/pocket_retrieve_options.dart';
-export 'src/pocket_state.dart';
-export 'src/pocket_tag.dart';
-export 'src/pocket_author.dart';
-export 'src/pocket_status.dart';
-export 'src/pocket_content_type.dart';
-export 'src/pocket_detail_type.dart';
-export 'src/pocket_sort_type.dart';
+export 'src/video_data.dart';
+export 'src/image_data.dart';
+export 'src/retrieve_options.dart';
+export 'src/enums.dart';
+export 'src/tag.dart';
+export 'src/author.dart';
 export 'src/pocket_response.dart';
-export 'src/pocket_item_to_add.dart';
-export 'src/pocket_actions.dart';
+export 'src/item_to_add.dart';
+export 'src/actions.dart';

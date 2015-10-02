@@ -2,7 +2,7 @@ library pocket_client.author;
 
 import 'dart:convert';
 
-class PocketAuthor {
+class Author {
 
   String itemId;
   String authorId;
@@ -10,14 +10,14 @@ class PocketAuthor {
   String url;
 
 
-  PocketAuthor(this.itemId, this.authorId, this.name, {this.url});
+  Author(this.itemId, this.authorId, this.name, {this.url});
 
-  PocketAuthor.fromJSON(String jsonString) {
+  Author.fromJSON(String jsonString) {
     Map json = JSON.decode(jsonString);
     _initFromMap(json);
   }
 
-  PocketAuthor.fromMap(Map<String, String> map) {
+  Author.fromMap(Map<String, String> map) {
 	  _initFromMap(map);
   }
 

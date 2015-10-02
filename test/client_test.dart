@@ -1,6 +1,6 @@
 library pocket_client.client_test;
 
-import 'package:pocket_client/pocket_client.dart';
+import 'package:pocket_client/pocket_client.dart' as pocket;
 import 'package:test/test.dart';
 
 import 'dart:convert';
@@ -22,7 +22,7 @@ class ClientTests {
 				  "since": 1443547195
 				}''';
 
-		assertResponse(PocketResponse result) {
+		assertResponse(pocket.PocketResponse result) {
 			expect(result.status, 1);
 			expect(result.complete, 0);
 			expect(result.error, 'Some error');
@@ -34,7 +34,7 @@ class ClientTests {
 
 		const actionResultsJson = '{"status": 0, "action_results":[true, false,true]}';
 
-		assertActionResults(PocketActionResults result) {
+		assertActionResults(pocket.ActionResults result) {
 			expect(result.hasErrors, true);
 			expect(result.results, [true, false, true]);
 		}
@@ -42,7 +42,7 @@ class ClientTests {
 		var actionResultsResponse = new Response(actionResultsJson, 200);
 
 		group('Get data.', () {
-			final url = '${PocketClientBase.rootUrl}${PocketClient.getSubUrl}';
+			final url = '${pocket.ClientBase.rootUrl}${pocket.Client.getSubUrl}';
 
 			test('should return data (without request options)', () {
 				var client = Mocks.httpClient(response, url, (String body) {
@@ -52,22 +52,22 @@ class ClientTests {
 					expect(json['access_token'], accessToken);
 				});
 
-				var pocket = new PocketClient(consumerKey, accessToken, client);
-				pocket.getPocketData().then(assertResponse);
+				var pocketClient = new pocket.Client(consumerKey, accessToken, client);
+				pocketClient.getData().then(assertResponse);
 			});
 
 			test('should return data (with options)', () {
-				var options = new PocketRetrieveOptions()
+				var options = new pocket.RetrieveOptions()
 					..since = new DateTime(2015, 5, 4)
-					..contentType = PocketContentType.video
+					..contentType = pocket.ContentType.video
 					..count = 100
 					..offset = 10
-					..detailType = PocketDetailType.complete
+					..detailType = pocket.DetailType.complete
 					..domain = 'http://domain.test'
 					..search = 'Some search query'
 					..isFavorite = true
-					..sortType = PocketSortType.site
-					..state = PocketState.archive
+					..sortType = pocket.SortType.site
+					..state = pocket.State.archive
 					..tag = 'cats';
 
 				var client = Mocks.httpClient(response, url, (String body) {
@@ -89,13 +89,13 @@ class ClientTests {
 					expect(json['since'], '1430686800000', reason: 'domain');
 				});
 
-				var pocket = new PocketClient(consumerKey, accessToken, client);
-				pocket.getPocketData(options: options).then(assertResponse);
+				var pocketClient = new pocket.Client(consumerKey, accessToken, client);
+				pocketClient.getData(options: options).then(assertResponse);
 			});
 		});
 
 		group('Add item.', () {
-			final url = '${PocketClientBase.rootUrl}${PocketClient.addSubUrl}';
+			final url = '${pocket.ClientBase.rootUrl}${pocket.Client.addSubUrl}';
 
 			test('should add url and return created item', () {
 				var newUrl = 'http://test.com/';
@@ -109,12 +109,12 @@ class ClientTests {
 					expect(json['url'], 'http://test.com/', reason: 'url');
 				});
 
-				var pocket = new PocketClient(consumerKey, accessToken, client);
-				pocket.addUrl(newUrl).then(assertResponse);
+				var pocketClient = new pocket.Client(consumerKey, accessToken, client);
+				pocketClient.addUrl(newUrl).then(assertResponse);
 			});
 
 			test('should add item and return created item', () {
-				var newItem = new PocketItemToAdd('http://test.com/')
+				var newItem = new pocket.ItemToAdd('http://test.com/')
 					..title = 'Test title'
 					..tweetId = '123456'
 					..tags = ['first', 'second', 'last'];
@@ -132,19 +132,19 @@ class ClientTests {
 					expect(json['tags'], 'first, second, last', reason: 'tags');
 				});
 
-				var pocket = new PocketClient(consumerKey, accessToken, client);
-				pocket.addItem(newItem).then(assertResponse);
+				var pocketClient = new pocket.Client(consumerKey, accessToken, client);
+				pocketClient.addItem(newItem).then(assertResponse);
 			});
 		});
 
 		group('Actions.', () {
-			final url = '${PocketClientBase.rootUrl}${PocketClient.sendSubUrl}';
+			final url = '${pocket.ClientBase.rootUrl}${pocket.Client.sendSubUrl}';
 
 			test('should send actions', () {
 				var actions = [
-					new PocketDeleteAction(12340, time: new DateTime.fromMillisecondsSinceEpoch(1430686800000)),
-					new PocketArchiveAction(12341, time: new DateTime.fromMillisecondsSinceEpoch(1430686800001)),
-					new PocketFavoriteAction(12342, time: new DateTime.fromMillisecondsSinceEpoch(1430686800002))
+					new pocket.DeleteAction(12340, time: new DateTime.fromMillisecondsSinceEpoch(1430686800000)),
+					new pocket.ArchiveAction(12341, time: new DateTime.fromMillisecondsSinceEpoch(1430686800001)),
+					new pocket.FavoriteAction(12342, time: new DateTime.fromMillisecondsSinceEpoch(1430686800002))
 				];
 
 				var client = Mocks.httpClient(actionResultsResponse, url, (String body) {
@@ -169,8 +169,8 @@ class ClientTests {
 					expect(actionsJson[2]['time'], '1430686800002', reason: 'actions favorite');
 				});
 
-				var pocket = new PocketClient(consumerKey, accessToken, client);
-				pocket.modify(actions).then(assertActionResults);
+				var pocketClient = new pocket.Client(consumerKey, accessToken, client);
+				pocketClient.modify(actions).then(assertActionResults);
 			});
 
 			test('should archive item', () {
@@ -191,8 +191,8 @@ class ClientTests {
 					expect(actionsJson[0]['time'], '1430686800001', reason: 'actions archive');
 				});
 
-				var pocket = new PocketClient(consumerKey, accessToken, client);
-				pocket.archive(12341, time: new DateTime.fromMillisecondsSinceEpoch(1430686800001)).then(assertActionResults);
+				var pocketClient = new pocket.Client(consumerKey, accessToken, client);
+				pocketClient.archive(12341, time: new DateTime.fromMillisecondsSinceEpoch(1430686800001)).then(assertActionResults);
 			});
 
 			test('should delete item', () {
@@ -213,8 +213,8 @@ class ClientTests {
 					expect(actionsJson[0]['time'], '1430686800002', reason: 'actions delete');
 				});
 
-				var pocket = new PocketClient(consumerKey, accessToken, client);
-				pocket.delete(12342, time: new DateTime.fromMillisecondsSinceEpoch(1430686800002)).then(assertActionResults);
+				var pocketClient = new pocket.Client(consumerKey, accessToken, client);
+				pocketClient.delete(12342, time: new DateTime.fromMillisecondsSinceEpoch(1430686800002)).then(assertActionResults);
 			});
 
 			test('should favorite item', () {
@@ -235,8 +235,8 @@ class ClientTests {
 					expect(actionsJson[0]['time'], '1430686800003', reason: 'actions favorite');
 				});
 
-				var pocket = new PocketClient(consumerKey, accessToken, client);
-				pocket.favorite(12343, time: new DateTime.fromMillisecondsSinceEpoch(1430686800003)).then(assertActionResults);
+				var pocketClient = new pocket.Client(consumerKey, accessToken, client);
+				pocketClient.favorite(12343, time: new DateTime.fromMillisecondsSinceEpoch(1430686800003)).then(assertActionResults);
 			});
 
 			test('should unfavorite item', () {
@@ -257,8 +257,8 @@ class ClientTests {
 					expect(actionsJson[0]['time'], '1430686800004', reason: 'actions unfavorite');
 				});
 
-				var pocket = new PocketClient(consumerKey, accessToken, client);
-				pocket.unFavorite(12344, time: new DateTime.fromMillisecondsSinceEpoch(1430686800004)).then(assertActionResults);
+				var pocketClient = new pocket.Client(consumerKey, accessToken, client);
+				pocketClient.unFavorite(12344, time: new DateTime.fromMillisecondsSinceEpoch(1430686800004)).then(assertActionResults);
 			});
 
 			test('should readd item', () {
@@ -279,8 +279,8 @@ class ClientTests {
 					expect(actionsJson[0]['time'], '1430686800005', reason: 'actions readd');
 				});
 
-				var pocket = new PocketClient(consumerKey, accessToken, client);
-				pocket.reAdd(12345, time: new DateTime.fromMillisecondsSinceEpoch(1430686800005)).then(assertActionResults);
+				var pocketClient = new pocket.Client(consumerKey, accessToken, client);
+				pocketClient.reAdd(12345, time: new DateTime.fromMillisecondsSinceEpoch(1430686800005)).then(assertActionResults);
 			});
 
 			test('should tags clear item', () {
@@ -301,8 +301,8 @@ class ClientTests {
 					expect(actionsJson[0]['time'], '1430686800006', reason: 'actions tags_clear');
 				});
 
-				var pocket = new PocketClient(consumerKey, accessToken, client);
-				pocket.clearTags(12346, time: new DateTime.fromMillisecondsSinceEpoch(1430686800006)).then(assertActionResults);
+				var pocketClient = new pocket.Client(consumerKey, accessToken, client);
+				pocketClient.clearTags(12346, time: new DateTime.fromMillisecondsSinceEpoch(1430686800006)).then(assertActionResults);
 			});
 		});
 	}

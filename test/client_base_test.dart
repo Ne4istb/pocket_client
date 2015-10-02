@@ -1,15 +1,13 @@
 library pocket_client.client_base_test;
 
-import 'package:pocket_client/pocket_client.dart';
+import 'package:pocket_client/pocket_client.dart' as pocket;
 import 'package:test/test.dart';
 
-import 'dart:convert';
 import 'package:http/http.dart';
-import 'package:http/testing.dart';
 
 import 'mocks.dart';
 
-class TestClientBase extends PocketClientBase {
+class TestClientBase extends pocket.ClientBase {
 	TestClientBase(String consumerKey, [Client httpClient = null]) : super(consumerKey, httpClient);
 }
 

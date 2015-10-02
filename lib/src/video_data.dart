@@ -2,7 +2,7 @@ library pocket_client.video_data;
 
 import 'dart:convert';
 
-class PocketVideoData {
+class VideoData {
 
 	String itemId;
 	String videoId;
@@ -12,14 +12,14 @@ class PocketVideoData {
 	int type;
 	String vId;
 
-	PocketVideoData(this.itemId, this.videoId, this.sourceUrl, {this.width, this.height, this.type, this.vId});
+	VideoData(this.itemId, this.videoId, this.sourceUrl, {this.width, this.height, this.type, this.vId});
 
-	PocketVideoData.fromJSON(String jsonString) {
+	VideoData.fromJSON(String jsonString) {
     Map json = JSON.decode(jsonString);
     _initFromMap(json);
   }
 
-	PocketVideoData.fromMap(Map<String, String> map) {
+	VideoData.fromMap(Map<String, String> map) {
 		_initFromMap(map);
 	}
 

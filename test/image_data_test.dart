@@ -3,9 +3,9 @@ library pocket_client.image_data_test;
 import 'package:pocket_client/pocket_client.dart';
 import 'package:test/test.dart';
 
-class PocketImageDataTests {
+class ImageDataTests {
 	static run() {
-		group('PocketImageData.fromJSON()', () {
+		group('ImageData.fromJSON()', () {
 
 			test('should create object from json', () {
 				String json = '''
@@ -19,7 +19,7 @@ class PocketImageDataTests {
 		      "caption": "cap"
 		    }''';
 
-				var actualData = new PocketImageData.fromJSON(json);
+				var actualData = new ImageData.fromJSON(json);
 
 				expect(actualData.itemId, '229279689', reason: 'itemId');
 				expect(actualData.imageId, '1', reason: 'imageId');
@@ -32,19 +32,19 @@ class PocketImageDataTests {
 
 			test('should parse width from json', () {
 
-				var actualData = new PocketImageData.fromJSON('{"width": "123"}');
+				var actualData = new ImageData.fromJSON('{"width": "123"}');
 				expect(actualData.width, 123);
 
-				actualData = new PocketImageData.fromJSON('{}');
+				actualData = new ImageData.fromJSON('{}');
 				expect(actualData.width, null);
 			});
 
 			test('should parse height from json', () {
 
-				var actualData = new PocketImageData.fromJSON('{"height": "123"}');
+				var actualData = new ImageData.fromJSON('{"height": "123"}');
 				expect(actualData.height, 123);
 
-				actualData = new PocketImageData.fromJSON('{}');
+				actualData = new ImageData.fromJSON('{}');
 				expect(actualData.height, null);
 			});
 		});
@@ -52,5 +52,5 @@ class PocketImageDataTests {
 }
 
 void main() {
-	PocketImageDataTests.run();
+	ImageDataTests.run();
 }

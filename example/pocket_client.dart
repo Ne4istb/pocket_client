@@ -7,7 +7,7 @@ import 'package:pocket_client/pocket_client.dart';
 
 main() {
 	const consumer_key = '46214-7e17b7d5c796445b095309ef';
-	var pocket = new PocketClient(consumer_key);
+	var pocket = new Client(consumer_key);
 
 // pocket.getRequestToken("http://som_redirect_uri").then((code){
 // print(Pocket.getAuthorizeUrl(code, "http://google.com"));
@@ -19,11 +19,11 @@ main() {
 //
 // });
 
-	var options = new PocketRetrieveOptions()
+	var options = new RetrieveOptions()
 		..count = 100
-		..detailType = PocketDetailType.complete
+		..detailType = DetailType.complete
 		..tag = 'digest';
-	pocket.getPocketData('cfd6484b-0f8f-87e7-5aee-c55c12', options: options).then((r){
+	pocket.getData('cfd6484b-0f8f-87e7-5aee-c55c12', options: options).then((r){
 		print(r);
 	});
 

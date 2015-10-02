@@ -3,18 +3,18 @@ library pocket_client.action_results_test;
 import 'package:pocket_client/pocket_client.dart';
 import 'package:test/test.dart';
 
-class TestAction extends PocketAction{
+class TestAction extends Action{
   TestAction(int itemId, {DateTime time}) : super('test', itemId, time: time);
 }
 
-class PocketActionsTests {
+class ActionsTests {
 
   static run() {
-	  group('PocketActionResults.fromJSON()', () {
+	  group('ActionResults.fromJSON()', () {
 		  test('Should convert json string to pocket action results with errors', () {
 			  const json = '{"action_results":[true, false, true],"status":0}';
 
-			  var actualData = new PocketActionResults.fromJSON(json);
+			  var actualData = new ActionResults.fromJSON(json);
 
 			  expect(actualData.hasErrors, true);
 			  expect(actualData.results, [true, false, true]);
@@ -23,14 +23,14 @@ class PocketActionsTests {
 		  test('Should convert json string to pocket action results without errors', () {
 			  const json = '{"action_results":[true, true, true],"status":1}';
 
-			  var actualData = new PocketActionResults.fromJSON(json);
+			  var actualData = new ActionResults.fromJSON(json);
 
 			  expect(actualData.hasErrors, false);
 			  expect(actualData.results, [true, true, true]);
 		  });
 	  });
 
-	  group('PocketAction', () {
+	  group('Action', () {
 
 		  test('Should convert action with time to json', () {
 
@@ -58,5 +58,5 @@ class PocketActionsTests {
 }
 
 void main() {
-	PocketActionsTests.run();
+	ActionsTests.run();
 }

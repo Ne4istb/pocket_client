@@ -1,11 +1,11 @@
 library pocket_client.data;
 
 import 'dart:convert';
-import 'package:pocket_client/src/pocket_status.dart';
-import 'package:pocket_client/src/pocket_tag.dart';
-import 'package:pocket_client/src/pocket_author.dart';
-import 'package:pocket_client/src/pocket_video_data.dart';
-import 'package:pocket_client/src/pocket_image_data.dart';
+import 'package:pocket_client/src/enums.dart';
+import 'package:pocket_client/src/tag.dart';
+import 'package:pocket_client/src/author.dart';
+import 'package:pocket_client/src/video_data.dart';
+import 'package:pocket_client/src/image_data.dart';
 
 class PocketData {
 
@@ -16,7 +16,7 @@ class PocketData {
 	String givenTitle;
 	String resolvedTitle;
 	bool isFavorite;
-	PocketStatus status;
+	Status status;
 	String excerpt;
 	bool isArticle;
 	bool isImage;
@@ -24,10 +24,10 @@ class PocketData {
 	bool hasImages;
 	bool hasVideos;
 	int wordCount;
-	List<PocketTag> tags;
-	List<PocketAuthor> authors;
-	List<PocketImageData> images;
-	List<PocketVideoData> videos;
+	List<Tag> tags;
+	List<Author> authors;
+	List<ImageData> images;
+	List<VideoData> videos;
 
 
 	PocketData(this.itemId, {this.resolvedId, this.givenUrl, this.resolvedUrl, this.givenTitle, this.resolvedTitle,
@@ -65,50 +65,50 @@ class PocketData {
 		videos = _convertToVideos(map['videos']);
 	}
 
-	List<PocketTag> _convertToTags(data) {
-		List<PocketTag> result = [];
+	List<Tag> _convertToTags(data) {
+		List<Tag> result = [];
 
-		data?.forEach((id, item) => result.add(new PocketTag.fromMap(item)));
-
-		return result;
-	}
-
-	List<PocketAuthor> _convertToAuthors(data) {
-		List<PocketAuthor> result = [];
-
-		data?.forEach((id, item) => result.add(new PocketAuthor.fromMap(item)));
+		data?.forEach((id, item) => result.add(new Tag.fromMap(item)));
 
 		return result;
 	}
 
-	List<PocketVideoData> _convertToVideos(data) {
-		List<PocketVideoData> result = [];
+	List<Author> _convertToAuthors(data) {
+		List<Author> result = [];
 
-		data?.forEach((id, item) => result.add(new PocketVideoData.fromMap(item)));
-
-		return result;
-	}
-
-	List<PocketImageData> _convertToImages(data) {
-		List<PocketImageData> result = [];
-
-		data?.forEach((id, item) => result.add(new PocketImageData.fromMap(item)));
+		data?.forEach((id, item) => result.add(new Author.fromMap(item)));
 
 		return result;
 	}
 
+	List<VideoData> _convertToVideos(data) {
+		List<VideoData> result = [];
 
-	PocketStatus _convertToPocketStatus(String statusString) {
+		data?.forEach((id, item) => result.add(new VideoData.fromMap(item)));
+
+		return result;
+	}
+
+	List<ImageData> _convertToImages(data) {
+		List<ImageData> result = [];
+
+		data?.forEach((id, item) => result.add(new ImageData.fromMap(item)));
+
+		return result;
+	}
+
+
+	Status _convertToPocketStatus(String statusString) {
 		if (statusString == null || statusString.isEmpty)
 			return null;
 
 		switch (statusString) {
 			case '0':
-				return PocketStatus.normal;
+				return Status.normal;
 			case '1':
-				return PocketStatus.archived;
+				return Status.archived;
 			case '2':
-				return PocketStatus.toBeDeleted;
+				return Status.toBeDeleted;
 			default:
 				throw new ArgumentError('Unknown pocket data status $statusString');
 		}
