@@ -7,6 +7,10 @@ class TestAction extends Action{
   TestAction(int itemId, {DateTime time}) : super('test', itemId, time: time);
 }
 
+class TestTagsAction extends TagsAction{
+	TestTagsAction(int itemId, List<String> tags, {DateTime time}) : super('test_tags', itemId, tags, time: time);
+}
+
 class ActionsTests {
 
   static run() {
@@ -53,6 +57,21 @@ class ActionsTests {
 			  expect(actualData['item_id'], '1234');
 		  });
 
+	  });
+
+	  group('Tags Action', () {
+
+		  test('Should convert action to json', () {
+
+			  var action = new TestTagsAction(1234, ['tag1', 'tag2'], time: new DateTime.fromMillisecondsSinceEpoch(1430686800000));
+
+			  var actualData = action.toMap();
+
+			  expect(actualData['action'], 'test_tags');
+			  expect(actualData['item_id'], '1234');
+			  expect(actualData['tags'], 'tag1, tag2');
+			  expect(actualData['time'], '1430686800000');
+		  });
 	  });
   }
 }

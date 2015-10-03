@@ -96,4 +96,20 @@ class Client extends ClientBase {
 	Future<ActionResults> clearTags(int itemId, {DateTime time}) {
 		return modify([new ClearTagsAction(itemId, time: time)]);
 	}
+
+	Future<ActionResults> addTags(int itemId, List<String> tags, {DateTime time}) {
+		return modify([new AddTagsAction(itemId, tags, time: time)]);
+	}
+
+	Future<ActionResults> removeTags(int itemId, List<String> tags, {DateTime time}) {
+		return modify([new RemoveTagsAction(itemId, tags, time: time)]);
+	}
+
+	Future<ActionResults> replaceTags(int itemId, List<String> tags, {DateTime time}) {
+		return modify([new ReplaceTagsAction(itemId, tags, time: time)]);
+	}
+
+	Future<ActionResults> renameTag(int itemId, String oldTag, String newTag, {DateTime time}) {
+		return modify([new RenameTagAction(itemId, oldTag, newTag, time: time)]);
+	}
 }
