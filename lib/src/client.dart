@@ -14,6 +14,7 @@ import 'package:pocket_client/src/client_base.dart';
 import 'package:pocket_client/src/retrieve_options.dart';
 import 'package:pocket_client/src/item_to_add.dart';
 import 'package:pocket_client/src/pocket_response.dart';
+import 'package:pocket_client/src/pocket_data.dart';
 import 'package:pocket_client/src/actions.dart';
 
 class Client extends ClientBase {
@@ -27,18 +28,21 @@ class Client extends ClientBase {
 	Client(String consumerKey, this.accessToken, [http.Client httpClient = null]) : super(consumerKey, httpClient);
 
 	Future<PocketResponse> getData({RetrieveOptions options}) {
-		return _post(getSubUrl, options?.toMap());
+		return _post(getSubUrl, options?.toMap())
+		.then((http.Response response) => new PocketResponse.fromJSON(response.body));
 	}
 
-	Future<PocketResponse> addItem(ItemToAdd newItem) {
-		return _post(addSubUrl, newItem.toMap());
+	Future<PocketData> addItem(ItemToAdd newItem) {
+		return _post(addSubUrl, newItem.toMap())
+		.then((http.Response response) => new PocketData.fromMap(JSON.decode(response.body)['item']));
 	}
 
-	Future<PocketResponse> addUrl(String newUrl) {
-		return _post(addSubUrl, {'url': Uri.encodeFull(newUrl)});
+	Future<PocketData> addUrl(String newUrl) {
+		return _post(addSubUrl, {'url': Uri.encodeFull(newUrl)})
+		.then((http.Response response) => new PocketData.fromMap(JSON.decode(response.body)['item']));
 	}
 
-	Future<PocketResponse> _post(String subUrl, Map<String, String> options) {
+	Future<http.Response> _post(String subUrl, Map<String, String> options) {
 		var url = '${ClientBase.rootUrl}$subUrl';
 
 		Map<String, String> body = {
@@ -51,7 +55,7 @@ class Client extends ClientBase {
 
 		var bodyJson = JSON.encode(body);
 
-		return httpPost(url, bodyJson).then((http.Response response) => new PocketResponse.fromJSON(response.body));
+		return httpPost(url, bodyJson);
 	}
 
 	Future<ActionResults> modify(List<Action> actions) {

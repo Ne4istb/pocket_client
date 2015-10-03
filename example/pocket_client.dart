@@ -1,30 +1,60 @@
 // Copyright (c) 2015, Ne4istb. All rights reserved. Use of this source code
+
 // is governed by a BSD-style license that can be found in the LICENSE file.
 
 library pocket_client.example;
 
 import 'package:pocket_client/pocket_client.dart';
 
+const consumerKey = '1234-abcd1234abcd1234abcd1234';
+const redirectUrl = 'http://some.redirect.uri/autorizationFinished';
+const accessToken = '5678defg-5678-defg-5678-defg56';
+
 main() {
-	const consumer_key = '46214-7e17b7d5c796445b095309ef';
-	var pocket = new Client(consumer_key);
+	var authorization = new ClientAuthorization(consumerKey);
 
-// pocket.getRequestToken("http://som_redirect_uri").then((code){
-// print(Pocket.getAuthorizeUrl(code, "http://google.com"));
-// });
+	var requestToken;
 
-// pocket.getAccessToken('562fcec9-e170-18c9-d256-211221').then((code){
-// print(code.accessToken);
-// print(code.userName);
-//
-// });
+	authorization.getRequestToken(redirectUrl).then((code) {
+		requestToken = code;
 
-	var options = new RetrieveOptions()
-		..count = 100
-		..detailType = DetailType.complete
-		..tag = 'digest';
-	pocket.getData('cfd6484b-0f8f-87e7-5aee-c55c12', options: options).then((r){
-		print(r);
+		var url = ClientAuthorization.getAuthorizeUrl(requestToken, redirectUrl);
+		// work whatever redirect magic you need here
 	});
 
+	//..
+
+	authorization.getAccessToken(requestToken).then(onAuthorizationFinished);
+}
+
+onAuthorizationFinished(User userData) {
+
+	var client = new Client(consumerKey, userData.accessToken);
+
+	var options = new RetrieveOptions()
+		..since = new DateTime(2015, 5, 4)
+		..search = 'Some search query'
+		..domain = 'http://domain.test'
+		..contentType = ContentType.video
+		..detailType = DetailType.complete
+		..isFavorite = true
+		..sortType = SortType.site
+		..state = State.all
+		..tag = 'cats'
+		..count = 100
+		..offset = 10;
+
+	client.getData(options: options).then((PocketResponse response) {
+		Map<String, PocketData> items = response.items;
+		// do whatever you want with pocket items
+	});
+
+	var newItem = new ItemToAdd('http://www.funnycatpix.com/')
+		..title = 'FUNNY CAT PICTURES'
+		..tweetId = '123456'
+		..tags = ['cats', 'cool', 'share'];
+
+	client.addItem(newItem).then((PocketData data) {
+		// do whatever you want with received data
+	});
 }

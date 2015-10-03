@@ -7,7 +7,7 @@ class PocketResponse {
 
 	int status;
 	int complete;
-	Map<String, PocketData> list;
+	Map<String, PocketData> items;
 	String error;
 	DateTime since;
 
@@ -17,7 +17,7 @@ class PocketResponse {
 
 		status = json['status'];
 		complete = json['complete'];
-		list = _convertToPocketDataList(json['list']);
+		items = _convertToPocketDataList(json['list']);
 		error = json['error'];
 		since = json['since'] != null ? new DateTime.fromMillisecondsSinceEpoch(json['since']) : null;
 	}

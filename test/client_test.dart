@@ -26,11 +26,29 @@ class ClientTests {
 			expect(result.status, 1);
 			expect(result.complete, 0);
 			expect(result.error, 'Some error');
-			expect(result.status, 1);
-			expect(result.list, {});
+			expect(result.items, {});
 		}
 
 		var response = new Response(responseJson, 200);
+
+		const addItemResponseJson = '''
+		{
+			"item": {
+			  "item_id": "229279689",
+			  "resolved_id": "229279689",
+			  "given_url": "http:\/\/www.grantland.com\/blog\/the-triangle\/post\/_\/id\/38347\/ryder-cup-preview",
+			  "given_title": "The Massive Ryder Cup Preview - The Triangle Blog - Grantland"
+		  }
+	  }''';
+
+		assertAddItemResponse(pocket.PocketData result) {
+			expect(result.itemId, '229279689');
+			expect(result.resolvedId, '229279689');
+			expect(result.givenUrl, 'http:\/\/www.grantland.com\/blog\/the-triangle\/post\/_\/id\/38347\/ryder-cup-preview');
+			expect(result.givenTitle, 'The Massive Ryder Cup Preview - The Triangle Blog - Grantland');
+		}
+
+		var addItemResponse = new Response(addItemResponseJson, 200);
 
 		const actionResultsJson = '{"status": 0, "action_results":[true, false,true]}';
 
@@ -100,7 +118,7 @@ class ClientTests {
 			test('should add url and return created item', () {
 				var newUrl = 'http://test.com/';
 
-				var client = Mocks.httpClient(response, url, (String body) {
+				var client = Mocks.httpClient(addItemResponse, url, (String body) {
 					Map json = JSON.decode(body);
 
 					expect(json.length, 3);
@@ -110,7 +128,7 @@ class ClientTests {
 				});
 
 				var pocketClient = new pocket.Client(consumerKey, accessToken, client);
-				pocketClient.addUrl(newUrl).then(assertResponse);
+				pocketClient.addUrl(newUrl).then(assertAddItemResponse);
 			});
 
 			test('should add item and return created item', () {
@@ -119,7 +137,7 @@ class ClientTests {
 					..tweetId = '123456'
 					..tags = ['first', 'second', 'last'];
 
-				var client = Mocks.httpClient(response, url, (String body) {
+				var client = Mocks.httpClient(addItemResponse, url, (String body) {
 					Map json = JSON.decode(body);
 
 					expect(json.length, 6);
@@ -133,7 +151,7 @@ class ClientTests {
 				});
 
 				var pocketClient = new pocket.Client(consumerKey, accessToken, client);
-				pocketClient.addItem(newItem).then(assertResponse);
+				pocketClient.addItem(newItem).then(assertAddItemResponse);
 			});
 		});
 

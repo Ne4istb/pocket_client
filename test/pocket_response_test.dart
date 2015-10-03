@@ -28,10 +28,10 @@ class PocketResponseTests {
 				expect(actualData.error, 'Some error', reason: 'error');
 				expect(actualData.since, new DateTime.fromMillisecondsSinceEpoch(1443547195), reason: 'since');
 
-				expect(actualData.list.length, 1, reason: 'list length');
+				expect(actualData.items.length, 1, reason: 'list length');
 
-				expect(actualData.list['1052437824'].itemId, '1052437824', reason: 'list item 0');
-				expect(actualData.list['1052437824'].resolvedId, '1052437824', reason: 'list item 0');
+				expect(actualData.items['1052437824'].itemId, '1052437824', reason: 'list item 0');
+				expect(actualData.items['1052437824'].resolvedId, '1052437824', reason: 'list item 0');
 			});
 
 			test('should parse since from json', () {
@@ -46,7 +46,7 @@ class PocketResponseTests {
 			test('should parse since from json', () {
 
 				var actualData = new PocketResponse.fromJSON('{}');
-				expect(actualData.list, {});
+				expect(actualData.items, {});
 
 				var json = '''
 				{
@@ -65,13 +65,13 @@ class PocketResponseTests {
 
 				actualData = new PocketResponse.fromJSON(json);
 
-				expect(actualData.list.length, 2, reason: 'list length');
+				expect(actualData.items.length, 2, reason: 'list length');
 
-				expect(actualData.list['1052437824'].itemId, '1052437824', reason: 'list item 0');
-				expect(actualData.list['1052437824'].resolvedId, '1052437824', reason: 'list item 0');
+				expect(actualData.items['1052437824'].itemId, '1052437824', reason: 'list item 0');
+				expect(actualData.items['1052437824'].resolvedId, '1052437824', reason: 'list item 0');
 
-				expect(actualData.list['1052437822'].itemId, '1052437822', reason: 'list item 1');
-				expect(actualData.list['1052437822'].resolvedId, '1052437858', reason: 'list item 1');
+				expect(actualData.items['1052437822'].itemId, '1052437822', reason: 'list item 1');
+				expect(actualData.items['1052437822'].resolvedId, '1052437858', reason: 'list item 1');
 			});
 		});
 	}
