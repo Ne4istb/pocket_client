@@ -23,7 +23,6 @@ abstract class Action {
 	Action(this.action, this.itemId, {this.time});
 
 	Map<String, String> toMap() {
-
 		Map<String, String> result = {
 			'action': action,
 			'item_id' : itemId.toString()
@@ -31,6 +30,35 @@ abstract class Action {
 
 		if (time != null)
 			result['time'] = time.millisecondsSinceEpoch.toString();
+
+		return result;
+	}
+}
+
+class AddAction extends Action {
+
+	String tweetId;
+	List<String> tags;
+	String title;
+	String url;
+
+	AddAction(itemId, {this.tweetId, this.tags, this.title, this.url, DateTime time})
+	: super('add', itemId, time: time);
+
+	Map<String, String> toMap() {
+		Map<String, String> result = super.toMap();
+
+		if (tweetId != null && tweetId.isNotEmpty)
+			result['ref_id'] = tweetId;
+
+		if (tags != null)
+			result['tags'] = tags.join(', ');
+
+		if (title != null && title.isNotEmpty)
+			result['title'] = title;
+
+		if (url != null && url.isNotEmpty)
+			result['url'] = Uri.encodeFull(url);
 
 		return result;
 	}
@@ -81,19 +109,20 @@ abstract class TagsAction extends Action {
 	TagsAction(String action, int itemId, this.tags, {DateTime time}) : super(action, itemId, time: time);
 
 	Map<String, String> toMap() {
-		return super.toMap()..['tags'] = tags.join(', ');
+		return super.toMap()
+			..['tags'] = tags.join(', ');
 	}
 }
 
-class AddTagsAction extends TagsAction{
-  AddTagsAction(int itemId, List<String> tags, {time}) : super('tags_add', itemId, tags, time: time);
+class AddTagsAction extends TagsAction {
+	AddTagsAction(int itemId, List<String> tags, {time}) : super('tags_add', itemId, tags, time: time);
 }
 
-class RemoveTagsAction extends TagsAction{
+class RemoveTagsAction extends TagsAction {
 	RemoveTagsAction(int itemId, List<String> tags, {time}) : super('tags_remove', itemId, tags, time: time);
 }
 
-class ReplaceTagsAction extends TagsAction{
+class ReplaceTagsAction extends TagsAction {
 	ReplaceTagsAction(int itemId, List<String> tags, {time}) : super('tags_replace', itemId, tags, time: time);
 }
 
