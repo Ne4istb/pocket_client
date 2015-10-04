@@ -2,7 +2,7 @@
 
 // is governed by a BSD-style license that can be found in the LICENSE file.
 
-library pocket_client.authorization;
+library pocket_client.authentication;
 
 import 'dart:convert';
 import 'dart:async';
@@ -12,13 +12,13 @@ import 'package:http/http.dart' as http;
 import 'package:pocket_client/src/client_base.dart';
 import 'package:pocket_client/src/user.dart';
 
-class ClientAuthorization extends ClientBase {
+class ClientAuthentication extends ClientBase {
 
 	static const oauthRequestUrl = '/v3/oauth/request';
 	static const oauthTokenUrl = '/auth/authorize';
 	static const oauthAccessUrl = '/v3/oauth/authorize';
 
-	ClientAuthorization(String consumerKey, [http.Client httpClient = null]) : super(consumerKey, httpClient);
+	ClientAuthentication(String consumerKey, [http.Client httpClient = null]) : super(consumerKey, httpClient);
 
 	Future<String> getRequestToken(String redirectUri) {
 		var url = '${ClientBase.rootUrl}$oauthRequestUrl';

@@ -7,7 +7,7 @@ library pocket_client;
 
 export 'src/client_base.dart';
 export 'src/client.dart';
-export 'src/client_authorization.dart';
+export 'src/client_authentication.dart';
 export 'src/user.dart';
 export 'src/pocket_data.dart';
 export 'src/video_data.dart';

@@ -4,7 +4,7 @@
 
 library pocket_client.test;
 
-import 'authorization_test.dart';
+import 'authentication_test.dart';
 import 'client_base_test.dart';
 import 'client_test.dart';
 import 'user_test.dart';
@@ -19,7 +19,7 @@ import 'item_to_add_test.dart';
 import 'actions_test.dart';
 
 void main() {
-  AuthorizationTests.run();
+  AuthenticationTests.run();
   ClientBaseTests.run();
   ClientTests.run();
   UserTests.run();

@@ -11,20 +11,20 @@ const redirectUrl = 'http://some.redirect.uri/autorizationFinished';
 const accessToken = '5678defg-5678-defg-5678-defg56';
 
 main() {
-	var authorization = new ClientAuthorization(consumerKey);
+	var authentication = new ClientAuthentication(consumerKey);
 
 	var requestToken;
 
-	authorization.getRequestToken(redirectUrl).then((code) {
+	authentication.getRequestToken(redirectUrl).then((code) {
 		requestToken = code;
 
-		var url = ClientAuthorization.getAuthorizeUrl(requestToken, redirectUrl);
+		var url = ClientAuthentication.getAuthorizeUrl(requestToken, redirectUrl);
 		// work whatever redirect magic you need here
 	});
 
 	//..
 
-	authorization.getAccessToken(requestToken).then(onAuthorizationFinished);
+	authentication.getAccessToken(requestToken).then(onAuthorizationFinished);
 }
 
 onAuthorizationFinished(User userData) {
