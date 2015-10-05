@@ -68,7 +68,8 @@ class PocketData {
 	List<Tag> _convertToTags(data) {
 		List<Tag> result = [];
 
-		data?.forEach((id, item) => result.add(new Tag.fromMap(item)));
+		if (data!=null && data.length > 0)
+			data.forEach((id, item) => result.add(new Tag.fromMap(item)));
 
 		return result;
 	}
@@ -76,7 +77,8 @@ class PocketData {
 	List<Author> _convertToAuthors(data) {
 		List<Author> result = [];
 
-		data?.forEach((id, item) => result.add(new Author.fromMap(item)));
+		if (data!=null && data.length > 0)
+			data.forEach((id, item) => result.add(new Author.fromMap(item)));
 
 		return result;
 	}
@@ -84,7 +86,8 @@ class PocketData {
 	List<VideoData> _convertToVideos(data) {
 		List<VideoData> result = [];
 
-		data?.forEach((id, item) => result.add(new VideoData.fromMap(item)));
+		if (data!=null && data.length > 0)
+			data.forEach((id, item) => result.add(new VideoData.fromMap(item)));
 
 		return result;
 	}
@@ -92,7 +95,8 @@ class PocketData {
 	List<ImageData> _convertToImages(data) {
 		List<ImageData> result = [];
 
-		data?.forEach((id, item) => result.add(new ImageData.fromMap(item)));
+		if (data!=null && data.length > 0)
+			data.forEach((id, item) => result.add(new ImageData.fromMap(item)));
 
 		return result;
 	}

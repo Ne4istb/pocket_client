@@ -43,9 +43,12 @@ class PocketResponseTests {
 				expect(actualData.since, new DateTime.fromMillisecondsSinceEpoch(1443547100));
 			});
 
-			test('should parse since from json', () {
+			test('should parse list from json', () {
 
 				var actualData = new PocketResponse.fromJSON('{}');
+				expect(actualData.items, {});
+
+				actualData = new PocketResponse.fromJSON('{"list":[]}');
 				expect(actualData.items, {});
 
 				var json = '''

@@ -122,6 +122,9 @@ class PocketDataTests {
 				var actualData = new PocketData.fromJSON('{}');
 				expect(actualData.tags, []);
 
+				actualData = new PocketData.fromJSON('{"tags": []}');
+				expect(actualData.tags, []);
+
 				var json = '''
 				{
 				"tags":{
@@ -145,6 +148,9 @@ class PocketDataTests {
 			test('should parse authors from json', () {
 
 				var actualData = new PocketData.fromJSON('{}');
+				expect(actualData.authors, []);
+
+				actualData = new PocketData.fromJSON('{"authors": []}');
 				expect(actualData.authors, []);
 
 				var json = '''
@@ -172,6 +178,9 @@ class PocketDataTests {
 			test('should parse videos from json', () {
 
 				var actualData = new PocketData.fromJSON('{}');
+				expect(actualData.videos, []);
+
+				actualData = new PocketData.fromJSON('{"videos": []}');
 				expect(actualData.videos, []);
 
 				var json = '''
@@ -205,6 +214,9 @@ class PocketDataTests {
 			test('should parse images from json', () {
 
 				var actualData = new PocketData.fromJSON('{}');
+				expect(actualData.images, []);
+
+				actualData = new PocketData.fromJSON('{"images": []}');
 				expect(actualData.images, []);
 
 				var json = '''

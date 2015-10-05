@@ -12,7 +12,6 @@ class PocketResponse {
 	DateTime since;
 
 	PocketResponse.fromJSON(String jsonString) {
-
 		Map json = JSON.decode(jsonString);
 
 		status = json['status'];
@@ -25,7 +24,8 @@ class PocketResponse {
 	Map<String, PocketData> _convertToPocketDataList(list) {
 		Map<String, PocketData> result = {};
 
-		list?.forEach((id, item) => result[id] = new PocketData.fromMap(item));
+		if (list != null && list.length > 0)
+			list.forEach((id, item) => result[id] = new PocketData.fromMap(item));
 
 		return result;
 	}

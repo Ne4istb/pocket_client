@@ -82,14 +82,14 @@ The basic example is in [example](https://github.com/Ne4istb/pocket_client/blob/
 
 ## Features and bugs
 
-Please file feature requests and bugs at the [issue tracker][tracker].
+Please fill feature requests and bugs at the [issue tracker][tracker].
 
 [tracker]: https://github.com/Ne4istb/pocket_client/issues
 
 
 ## License
 
-pocket\_client is distributed under the [MIT license](https://github.com/Ne4istb/pocket_client/blob/master/LICENSE).
+pocket\_client is distributed under the [BSD license](https://github.com/Ne4istb/pocket_client/blob/master/LICENSE).
 
 
 
