@@ -1,13 +1,12 @@
 name: pocket_client
-description: A starting point for Dart libraries or applications.
-version: 0.0.1
+description: A library for authenticating and accessing the Pocket API from Dart
+version: 0.1.1
 author: Ne4istb <anechytailov@gmail.com>
 homepage: https://github.com/Ne4istb
-
+documentation: https://github.com/Ne4istb/pocket_client/blob/master/API.md
 environment:
-  sdk: '>=1.0.0 <2.0.0'
-
+  sdk: ">=1.8.0 <2.0.0"
 dependencies:
-  http: '^0.11.3+2'
+  http: ">=0.11.3+2 <0.12.0"
 dev_dependencies:
   test: '>=0.12.0 <0.13.0'

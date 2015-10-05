@@ -78,7 +78,7 @@ See the [Api documentation](https://github.com/Ne4istb/pocket_client/blob/master
 
 ## Examples
 
-The basic example is in [example](https://github.com/Ne4istb/pocket_client/blob/master/example/pocket_client.dart);
+The basic example is in [example file](https://github.com/Ne4istb/pocket_client/blob/master/example/pocket_client.dart)
 
 ## Features and bugs
 
@@ -89,7 +89,7 @@ Please fill feature requests and bugs at the [issue tracker][tracker].
 
 ## License
 
-pocket\_client is distributed under the [BSD license](https://github.com/Ne4istb/pocket_client/blob/master/LICENSE).
+pocket_client is distributed under the [BSD license](https://github.com/Ne4istb/pocket_client/blob/master/LICENSE).
 
 
 
