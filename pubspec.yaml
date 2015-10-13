@@ -2,7 +2,7 @@ name: pocket_client
 description: A library for authenticating and accessing the Pocket API from Dart
 version: 0.1.1
 author: Ne4istb <anechytailov@gmail.com>
-homepage: https://github.com/Ne4istb
+homepage: https://github.com/Ne4istb/pocket_client
 documentation: https://github.com/Ne4istb/pocket_client/blob/master/API.md
 environment:
   sdk: ">=1.8.0 <2.0.0"
