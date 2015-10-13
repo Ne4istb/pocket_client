@@ -30,7 +30,6 @@ var userData = await authentication.getAccessToken(requestToken);
 var accessToken = userData.accessToken;
 var userName = userData.userName;
 // use this data to work with Pocket
-});
 ```	
 
 ## Pocket Client
@@ -111,7 +110,6 @@ PocketData data = await client.addItem(newItem);
 ```dart
 PocketData data = await client.addUrl(newUrl);
 // do whatever you want with received data
-});
 ```
 
 ##### modify(List<Action> actions)  
