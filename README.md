@@ -14,18 +14,17 @@ const redirectUrl = 'http://some.redirect.uri/autorizationFinished';
 main() async {
   var authentication = new ClientAuthentication(consumerKey);
 
-  var requestToken = await authentication.getRequestToken(redirectUrl)
-
+  var requestToken = await authentication.getRequestToken(redirectUrl);
   var url = ClientAuthentication.getAuthorizeUrl(requestToken, redirectUrl);
-  
   // work whatever redirect magic you need here
 
-  await authentication.getAccessToken(requestToken)
-  onAuthorizationFinished();
-}
+  //..
 
-onAuthorizationFinished(User userData) {
-  var accessToken = userData.accessToken;
+  var userData = await authentication.getAccessToken(requestToken);
+  onAuthorizationFinished(userData.accessToken);
+} 
+
+onAuthorizationFinished(String accessToken) {
   // now you have everything to communicate with Pocket 
 }
 ```
@@ -55,17 +54,16 @@ main() async {
     ..offset = 10;
 
   var response = await client.getData(options: options);
-  
-  // do whatever you want with pocket items
   Map<String, PocketData> items = response.items;
-  
+  // do whatever you want with pocket items
+
   var newItem = new ItemToAdd('http://www.funnycatpix.com/')
     ..title = 'FUNNY CAT PICTURES'
     ..tweetId = '123456'
     ..tags = ['cats', 'cool', 'share'];
 
+  PocketData data = await client.addItem(newItem);
   // do whatever you want with received data
-  PocketData data = client.addItem(newItem);
 }
 ```
 

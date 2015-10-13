@@ -10,51 +10,44 @@ const consumerKey = '1234-abcd1234abcd1234abcd1234';
 const redirectUrl = 'http://some.redirect.uri/autorizationFinished';
 const accessToken = '5678defg-5678-defg-5678-defg56';
 
-main() {
-	var authentication = new ClientAuthentication(consumerKey);
+main() async {
+  var authentication = new ClientAuthentication(consumerKey);
 
-	var requestToken;
+  var requestToken = await authentication.getRequestToken(redirectUrl);
+  var url = ClientAuthentication.getAuthorizeUrl(requestToken, redirectUrl);
+  // work whatever redirect magic you need here
 
-	authentication.getRequestToken(redirectUrl).then((code) {
-		requestToken = code;
+  //..
 
-		var url = ClientAuthentication.getAuthorizeUrl(requestToken, redirectUrl);
-		// work whatever redirect magic you need here
-	});
-
-	//..
-
-	authentication.getAccessToken(requestToken).then(onAuthorizationFinished);
+  var userData = await authentication.getAccessToken(requestToken);
+  onAuthorizationFinished(userData.accessToken);
 }
 
-onAuthorizationFinished(User userData) {
+onAuthorizationFinished(String accessToken) async {
+  var client = new Client(consumerKey, accessToken);
 
-	var client = new Client(consumerKey, userData.accessToken);
+  var options = new RetrieveOptions()
+    ..since = new DateTime(2015, 5, 4)
+    ..search = 'Some search query'
+    ..domain = 'http://domain.test'
+    ..contentType = ContentType.video
+    ..detailType = DetailType.complete
+    ..isFavorite = true
+    ..sortType = SortType.site
+    ..state = State.all
+    ..tag = 'cats'
+    ..count = 100
+    ..offset = 10;
 
-	var options = new RetrieveOptions()
-		..since = new DateTime(2015, 5, 4)
-		..search = 'Some search query'
-		..domain = 'http://domain.test'
-		..contentType = ContentType.video
-		..detailType = DetailType.complete
-		..isFavorite = true
-		..sortType = SortType.site
-		..state = State.all
-		..tag = 'cats'
-		..count = 100
-		..offset = 10;
+  var response = await client.getData(options: options);
+  Map<String, PocketData> items = response.items;
+  // do whatever you want with pocket items
 
-	client.getData(options: options).then((PocketResponse response) {
-		Map<String, PocketData> items = response.items;
-		// do whatever you want with pocket items
-	});
+  var newItem = new ItemToAdd('http://www.funnycatpix.com/')
+    ..title = 'FUNNY CAT PICTURES'
+    ..tweetId = '123456'
+    ..tags = ['cats', 'cool', 'share'];
 
-	var newItem = new ItemToAdd('http://www.funnycatpix.com/')
-		..title = 'FUNNY CAT PICTURES'
-		..tweetId = '123456'
-		..tags = ['cats', 'cool', 'share'];
-
-	client.addItem(newItem).then((PocketData data) {
-		// do whatever you want with received data
-	});
+  PocketData data = await client.addItem(newItem);
+  // do whatever you want with received data
 }

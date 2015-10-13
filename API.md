@@ -10,10 +10,7 @@ Check [Pocket Authentication API](https://getpocket.com/developer/docs/authentic
 #####Step 2. Get a request token
 ```dart
 var authentication = new ClientAuthentication(consumerKey);
-
-authentication.getRequestToken(redirectUrl).then((requestToken) {
-	//...
-});
+var requestToken = await authentication.getRequestToken(redirectUrl);
 ```
 
 #####Step 3: Get authorization url to redirect user to Pocket to continue authorization
@@ -29,10 +26,10 @@ When the user has authorized (or rejected) your application's request token, Poc
 #####Step 5: Convert a request token into a Pocket access token
 When user is authorized in Pocket you can convert the request token to an access token
  ```dart
-authentication.getAccessToken(requestToken).then((userData) {
-	var accessToken = userData.accessToken;
-	var userName = userData.userNAme;
-	// use this data to work with Pocket
+var userData = await authentication.getAccessToken(requestToken);
+var accessToken = userData.accessToken;
+var userName = userData.userName;
+// use this data to work with Pocket
 });
 ```	
 
@@ -82,40 +79,38 @@ var client = new Client(consumerKey, accessToken);
 ##### getData({RetrieveOptions options})
 ```dart
 var options = new RetrieveOptions()
-	..since = new DateTime(2015, 5, 4)
-	..search = 'Some search query'
-	..domain = 'http://domain.test'
-	..contentType = ContentType.video
-	..detailType = DetailType.complete
-	..isFavorite = true
-	..sortType = SortType.site
-	..state = State.all
-	..tag = 'cats'
-	..count = 100
-	..offset = 10;
+ ..since = new DateTime(2015, 5, 4)
+ ..search = 'Some search query'
+ ..domain = 'http://domain.test'
+ ..contentType = ContentType.video
+ ..detailType = DetailType.complete
+ ..isFavorite = true
+ ..sortType = SortType.site
+ ..state = State.all
+ ..tag = 'cats'
+ ..count = 100
+ ..offset = 10;
 
-client.getData(options: options).then((PocketResponse response) {
-	Map<String, PocketData> items = response.items;
-	// do whatever you want with pocket items
-});
+var response = await client.getData(options: options);
+Map<String, PocketData> items = response.items;
+// do whatever you want with pocket items
 ```
 
 ##### addItem(ItemToAdd newItem)
 ```dart
 var newItem = new ItemToAdd('http://www.funnycatpix.com/')
-	..title = 'FUNNY CAT PICTURES'
-	..tweetId = '123456'
-	..tags = ['cats', 'cool', 'share'];
+ ..title = 'FUNNY CAT PICTURES'
+ ..tweetId = '123456'
+ ..tags = ['cats', 'cool', 'share'];
 
-client.addItem(newItem).then((PocketData data) {
-	// do whatever you want with received data
-});
+PocketData data = await client.addItem(newItem);
+// do whatever you want with received data
 ```
 
 ##### addItem(ItemToAdd newItem)
 ```dart
-client.addUrl(newUrl).then((PocketData data) {
-	// do whatever you want with received data
+PocketData data = await client.addUrl(newUrl);
+// do whatever you want with received data
 });
 ```
 
@@ -127,99 +122,61 @@ var actions = [
 	new FavoriteAction(12342, time: new DateTime.fromMillisecondsSinceEpoch(1430686800002))
 ];
 
-client.modify(actions).then((ActionResults result) {
-	// ...
-});
+ActionResults result = await client.modify(actions);
 ```
 
 ##### archive(int itemId, {DateTime time})
 ```dart
-client
-	.archive(12341, time: new DateTime.fromMillisecondsSinceEpoch(1430686800001))
-	.then((ActionResults result) {
-		// ...
-	});
+ActionResults result = await client.archive(12341, time: new DateTime.fromMillisecondsSinceEpoch(1430686800001));
 ```
 
 ##### delete(int itemId, {DateTime time})
 ```dart
-client
-	.delete(12341, time: new DateTime.fromMillisecondsSinceEpoch(1430686800001))
-	.then((ActionResults result) {
-		// ...
-	});
+ActionResults result = await client.delete(12341, time: new DateTime.fromMillisecondsSinceEpoch(1430686800001));
 ```
 
 ##### favorite(int itemId, {DateTime time})
 ```dart
-client
-	.favorite(12341, time: new DateTime.fromMillisecondsSinceEpoch(1430686800001))
-	.then((ActionResults result) {
-		// ...
-	});
+ActionResults result = await client.favorite(12341, time: new DateTime.fromMillisecondsSinceEpoch(1430686800001))
 ```
 
 ##### unFavorite(int itemId, {DateTime time})
 ```dart
-client
-	.unFavorite(12341, time: new DateTime.fromMillisecondsSinceEpoch(1430686800001))
-	.then((ActionResults result) {
-		// ...
-	});
+ActionResults result = await client.unFavorite(12341, time: new DateTime.fromMillisecondsSinceEpoch(1430686800001));
 ```
 
 ##### reAdd(int itemId, {DateTime time})
 ```dart
-client
-	.reAdd(12341, time: new DateTime.fromMillisecondsSinceEpoch(1430686800001))
-	.then((ActionResults result) {
-		// ...
-	});
+ActionResults result = await client.reAdd(12341, time: new DateTime.fromMillisecondsSinceEpoch(1430686800001));
 ```
 
 ##### clearTags(int itemId, {DateTime time})
 ```dart
-client
-	.clearTags(12341, time: new DateTime.fromMillisecondsSinceEpoch(1430686800001))
-	.then((ActionResults result) {
-		// ...
-	});
+ActionResults result = await client.clearTags(12341, time: new DateTime.fromMillisecondsSinceEpoch(1430686800001));
 ```
 
 ##### addTags(int itemId, List<String> tags, {DateTime time})
 ```dart
-client
-	.addTags(12346, ['firstTag', 'secondTag'], time: new DateTime.fromMillisecondsSinceEpoch(1430686800006))
-	.then((ActionResults result) {
-		// ...
-	});
+ActionResults result = await client
+	.addTags(12346, ['firstTag', 'secondTag'], time: new DateTime.fromMillisecondsSinceEpoch(1430686800006));
 ```
 
 ##### removeTags(int itemId, List<String> tags, {DateTime time})
 ```dart
-client
-	.removeTags(12346, ['firstTag', 'secondTag'], time: new DateTime.fromMillisecondsSinceEpoch(1430686800006))
-	.then((ActionResults result) {
-		// ...
-	});
+ActionResults result = await client
+	.removeTags(12346, ['firstTag', 'secondTag'], time: new DateTime.fromMillisecondsSinceEpoch(1430686800006));
 ```
 
 ##### replaceTags(int itemId, List<String> tags, {DateTime time})
 ```dart
-client
-	.replaceTags(12346, ['firstTag', 'secondTag'], time: new DateTime.fromMillisecondsSinceEpoch(1430686800006))
-	.then((ActionResults result) {
-		// ...
-	});
+ActionResults result = await client
+	.replaceTags(12346, ['firstTag', 'secondTag'], time: new DateTime.fromMillisecondsSinceEpoch(1430686800006));
 ```
 
 ##### renameTag(int itemId, String oldTag, String newTag, {DateTime time})
 ```dart
-client
-	.renameTag(12346, 'firstTag', 'secondTag', time: new DateTime.fromMillisecondsSinceEpoch(1430686800006))
-	.then((ActionResults result) {
-		// ...
-	});
+ActionResults result = await client
+	.renameTag(12346, 'firstTag', 'secondTag', time: new DateTime.fromMillisecondsSinceEpoch(1430686800006));
 ```
 
 
