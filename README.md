@@ -1,3 +1,9 @@
+
+[![Pub Package](https://img.shields.io/pub/v/pocket_client.svg)](https://pub.dartlang.org/packages/pocket_client)
+[![Build Status](https://travis-ci.org/Ne4istb/pocket_client.svg)](https://travis-ci.org/Ne4istb/pocket_client)
+[![Coverage Status](https://coveralls.io/repos/github/Ne4istb/pocket_client/badge.svg?branch=master)](https://coveralls.io/github/Ne4istb/pocket_client?branch=master)
+[![Github Issues](http://githubbadges.herokuapp.com/Ne4istb/pocket_client/issues.svg)](https://github.com/Ne4istb/pocket_client/issues)
+
 # pocket_client
 
 A library for authenticating and accessing the Pocket API from Dart
