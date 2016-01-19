@@ -94,13 +94,13 @@ class RetrieveOptionsTests {
       });
 
       test('should return a json with since', () {
-        var options = new RetrieveOptions(since: new DateTime(2015, 10, 20));
-        expect(options.toMap(), {"since":"1445288400000"});
+        var options = new RetrieveOptions(since: new DateTime.utc(2015, 10, 20));
+        expect(options.toMap(), {"since":"1445299200000"});
       });
 
       test('should return json with all options', () {
         var options = new RetrieveOptions()
-          ..since = new DateTime(2015, 5, 4)
+          ..since = new DateTime.utc(2015, 5, 4)
           ..contentType = ContentType.video
           ..count = 100
           ..offset = 10
@@ -123,7 +123,7 @@ class RetrieveOptionsTests {
           'domain':'http://domain.test',
           'count':'100',
           'offset':'10',
-          'since':'1430686800000'
+          'since':'1430697600000'
         };
 
         expect(options.toMap(), expected);

@@ -76,7 +76,7 @@ class ClientTests {
 
 			test('should return data (with options)', () {
 				var options = new pocket.RetrieveOptions()
-					..since = new DateTime(2015, 5, 4)
+					..since = new DateTime.utc(2015, 5, 4)
 					..contentType = pocket.ContentType.video
 					..count = 100
 					..offset = 10
@@ -104,7 +104,7 @@ class ClientTests {
 					expect(json['domain'], 'http://domain.test', reason: 'domain');
 					expect(json['count'], '100', reason: 'count');
 					expect(json['offset'], '10', reason: 'offset');
-					expect(json['since'], '1430686800000', reason: 'domain');
+					expect(json['since'], '1430697600000', reason: 'domain');
 				});
 
 				var pocketClient = new pocket.Client(consumerKey, accessToken, client);
