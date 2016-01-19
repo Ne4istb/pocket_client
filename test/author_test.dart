@@ -24,6 +24,16 @@ class AuthorTests {
       expect(actualData.name, 'zsolt-nagy');
       expect(actualData.url, 'http:\/\/www.zsoltnagy.eu\/author\/zsolt555\/');
     });
+
+    test('Author. Should put correct data via constructor', () {
+
+      var actualData = new Author('1033645339', '33265953', 'zsolt-nagy', url: 'http:\/\/www.zsoltnagy.eu\/author\/zsolt555\/');
+
+      expect(actualData.itemId, '1033645339');
+      expect(actualData.authorId, '33265953');
+      expect(actualData.name, 'zsolt-nagy');
+      expect(actualData.url, 'http:\/\/www.zsoltnagy.eu\/author\/zsolt555\/');
+    });
   }
 }
 

@@ -16,6 +16,14 @@ class UserTests {
       expect(actualData.userName, 'Ne4istb');
       expect(actualData.accessToken, '5678defg-5678-defg-5678-defg56');
     });
+
+    test('User. Should create user data', () {
+
+      var actualData = new User('Ne4istb', '5678defg-5678-defg-5678-defg56');
+
+      expect(actualData.userName, 'Ne4istb');
+      expect(actualData.accessToken, '5678defg-5678-defg-5678-defg56');
+    });
   }
 }
 
