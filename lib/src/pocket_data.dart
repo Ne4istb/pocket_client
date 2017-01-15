@@ -79,15 +79,6 @@ class PocketData {
     videos = _convertToVideos(map['videos']);
   }
 
-//	List<T> _convertTo<T>(dynamic data) {
-//		List<T> result = new List<T>();
-//
-//		if (data!=null && data.length > 0)
-//			data.forEach((_, Map<String, String> item) => result.add(new Tag.fromMap(item) as T));
-//
-//		return result;
-//	}
-
   List<Tag> _convertToTags(dynamic data) {
     List<Tag> result = new List<Tag>();
 
