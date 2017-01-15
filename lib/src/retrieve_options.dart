@@ -21,7 +21,7 @@ class RetrieveOptions {
 
   Map<String,String> toMap(){
 
-    Map<String,String> result = {};
+    Map<String,String> result = new Map<String, String>();
 
     if (state != null)
       result['state'] = _getStateValueString(state);
@@ -67,6 +67,8 @@ class RetrieveOptions {
         return 'all';
       case State.archive:
         return 'archive';
+      default:
+        throw new ArgumentError('Unknown state type');
     }
   }
 
@@ -78,6 +80,8 @@ class RetrieveOptions {
         return 'video';
       case ContentType.image:
         return 'image';
+      default:
+        throw new ArgumentError('Unknown content type');
     }
   }
 
@@ -91,15 +95,19 @@ class RetrieveOptions {
         return 'site';
       case SortType.title:
         return 'title';
+      default:
+        throw new ArgumentError('Unknown sort type');
     }
   }
 
-  String _getDetailTypeString(DetailType detailtype){
-    switch (detailtype){
+  String _getDetailTypeString(DetailType detailType){
+    switch (detailType){
       case DetailType.complete:
         return 'complete';
       case DetailType.simple:
         return 'simple';
+      default:
+        throw new ArgumentError('Unknown detail type');
     }
   }
 }

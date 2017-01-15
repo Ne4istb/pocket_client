@@ -15,7 +15,7 @@ class ImageData {
 	ImageData(this.itemId, this.imageId, this.sourceUrl,{ this.width, this.height, this.credit, this.caption});
 
 	ImageData.fromJSON(String jsonString) {
-    Map json = JSON.decode(jsonString);
+		Map<String, String> json = JSON.decode(jsonString) as Map<String, String>;
     _initFromMap(json);
   }
 
@@ -23,7 +23,7 @@ class ImageData {
 		_initFromMap(map);
 	}
 
-	_initFromMap(Map<String, String> map) {
+	void _initFromMap(Map<String, String> map) {
 		itemId = map['item_id'];
 		imageId = map['image_id'];
 		credit = map['credit'];

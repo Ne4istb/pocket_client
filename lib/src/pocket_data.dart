@@ -34,16 +34,16 @@ class PocketData {
 		this.isFavorite, this.status, this.excerpt, this.isArticle, this.isImage, this.isVideo, this.hasImages,
 		this.hasVideos, this.wordCount, this.tags, this.authors, this.images, this.videos});
 
-	PocketData.fromMap(Map map) {
+	PocketData.fromMap(Map<String, dynamic> map) {
 		_initFromMap(map);
 	}
 
 	PocketData.fromJSON(String jsonString) {
-		Map json = JSON.decode(jsonString);
+		Map<String, dynamic> json = JSON.decode(jsonString) as Map<String, dynamic>;
 		_initFromMap(json);
 	}
 
-	_initFromMap(map){
+	void _initFromMap(Map<String, dynamic> map){
 		itemId = map['item_id'];
 		resolvedId = map['resolved_id'];
 		givenUrl = map['given_url'];
@@ -65,42 +65,50 @@ class PocketData {
 		videos = _convertToVideos(map['videos']);
 	}
 
-	List<Tag> _convertToTags(data) {
-		List<Tag> result = [];
+//	List<T> _convertTo<T>(dynamic data) {
+//		List<T> result = new List<T>();
+//
+//		if (data!=null && data.length > 0)
+//			data.forEach((_, Map<String, String> item) => result.add(new Tag.fromMap(item) as T));
+//
+//		return result;
+//	}
+	
+	List<Tag> _convertToTags(dynamic data) {
+		List<Tag> result = new List<Tag>();
 
 		if (data!=null && data.length > 0)
-			data.forEach((id, item) => result.add(new Tag.fromMap(item)));
+			data.forEach((_, Map<String, String> item) => result.add(new Tag.fromMap(item)));
 
 		return result;
 	}
 
-	List<Author> _convertToAuthors(data) {
-		List<Author> result = [];
+	List<Author> _convertToAuthors(dynamic data) {
+		List<Author> result = new List<Author>();
 
 		if (data!=null && data.length > 0)
-			data.forEach((id, item) => result.add(new Author.fromMap(item)));
+			data.forEach((_, Map<String, String> item) => result.add(new Author.fromMap(item)));
 
 		return result;
 	}
 
-	List<VideoData> _convertToVideos(data) {
-		List<VideoData> result = [];
+	List<VideoData> _convertToVideos(dynamic data) {
+		List<VideoData> result = new List<VideoData>();
 
 		if (data!=null && data.length > 0)
-			data.forEach((id, item) => result.add(new VideoData.fromMap(item)));
+			data.forEach((_, Map<String, String> item) => result.add(new VideoData.fromMap(item)));
 
 		return result;
 	}
 
-	List<ImageData> _convertToImages(data) {
-		List<ImageData> result = [];
+	List<ImageData> _convertToImages(dynamic data) {
+		List<ImageData> result = new List<ImageData>();
 
 		if (data!=null && data.length > 0)
-			data.forEach((id, item) => result.add(new ImageData.fromMap(item)));
+			data.forEach((_, Map<String, String> item) => result.add(new ImageData.fromMap(item)));
 
 		return result;
 	}
-
 
 	Status _convertToPocketStatus(String statusString) {
 		if (statusString == null || statusString.isEmpty)

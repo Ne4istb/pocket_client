@@ -13,21 +13,21 @@ class TestTagsAction extends TagsAction {
 
 class ActionsTests {
 
-	static run() {
+	static void run() {
 		group('ActionResults.fromJSON()', () {
 			test('Should convert json string to pocket action results with errors', () {
-				const json = '{"action_results":[true, false, true],"status":0}';
-
-				var actualData = new ActionResults.fromJSON(json);
+				const String json = '{"action_results":[true, false, true],"status":0}';
+				
+				ActionResults actualData = new ActionResults.fromJSON(json);
 
 				expect(actualData.hasErrors, true);
 				expect(actualData.results, [true, false, true]);
 			});
 
 			test('Should convert json string to pocket action results without errors', () {
-				const json = '{"action_results":[true, true, true],"status":1}';
-
-				var actualData = new ActionResults.fromJSON(json);
+				const String json = '{"action_results":[true, true, true],"status":1}';
+				
+				ActionResults actualData = new ActionResults.fromJSON(json);
 
 				expect(actualData.hasErrors, false);
 				expect(actualData.results, [true, true, true]);
@@ -36,9 +36,9 @@ class ActionsTests {
 
 		group('Action', () {
 			test('Should convert action with time to json', () {
-				var action = new TestAction(1234, time: new DateTime.fromMillisecondsSinceEpoch(1430686800000));
-
-				var actualData = action.toMap();
+				TestAction action = new TestAction(1234, time: new DateTime.fromMillisecondsSinceEpoch(1430686800000));
+				
+				Map<String, String> actualData = action.toMap();
 
 				expect(actualData['action'], 'test');
 				expect(actualData['item_id'], '1234');
@@ -46,9 +46,9 @@ class ActionsTests {
 			});
 
 			test('Should convert action without time to json', () {
-				var action = new TestAction(1234);
-
-				var actualData = action.toMap();
+				TestAction action = new TestAction(1234);
+				
+				Map<String, String> actualData = action.toMap();
 
 				expect(actualData['action'], 'test');
 				expect(actualData['item_id'], '1234');
@@ -57,10 +57,10 @@ class ActionsTests {
 
 		group('Tags Action', () {
 			test('Should convert action to json', () {
-				var action = new TestTagsAction(
+				TestTagsAction action = new TestTagsAction(
 				1234, ['tag1', 'tag2'], time: new DateTime.fromMillisecondsSinceEpoch(1430686800000));
-
-				var actualData = action.toMap();
+				
+				Map<String, String> actualData = action.toMap();
 
 				expect(actualData['action'], 'test_tags');
 				expect(actualData['item_id'], '1234');
@@ -71,14 +71,14 @@ class ActionsTests {
 
 		group('Add Action', () {
 			test('Should convert action to json', () {
-				var action = new AddAction(1234,
+				AddAction action = new AddAction(1234,
 					tweetId: '12324566',
 					tags: ['1232346', 'newtag'],
 					title: 'Some title',
 					url: 'http://test.com/123',
 					time: new DateTime.fromMillisecondsSinceEpoch(1430686800000));
-
-				var actualData = action.toMap();
+				
+				Map<String, String> actualData = action.toMap();
 
 				expect(actualData['action'], 'add');
 				expect(actualData['item_id'], '1234');

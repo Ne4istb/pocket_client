@@ -5,8 +5,8 @@ author: Ne4istb <anechytailov@gmail.com>
 homepage: https://github.com/Ne4istb/pocket_client
 documentation: https://github.com/Ne4istb/pocket_client/blob/master/API.md
 environment:
-  sdk: ">=1.8.0 <2.0.0"
+  sdk: '>=1.21.0'
 dependencies:
-  http: ">=0.11.3+2 <0.12.0"
+  http: '>=0.11.3+2 <0.12.0'
 dev_dependencies:
   test: '>=0.12.0 <0.13.0'

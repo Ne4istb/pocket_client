@@ -4,7 +4,7 @@ import 'package:pocket_client/pocket_client.dart';
 import 'package:test/test.dart';
 
 class PocketDataTests {
-	static run() {
+	static void run() {
 		group('PocketData.fromJSON()', () {
 			test('should create object from json', () {
 				String json = '''
@@ -57,8 +57,8 @@ class PocketDataTests {
 					  }
 					}
 				}''';
-
-				var actualData = new PocketData.fromJSON(json);
+				
+				PocketData actualData = new PocketData.fromJSON(json);
 
 				expect(actualData.itemId, '229279689', reason: 'itemId');
 				expect(actualData.resolvedId, '229279689', reason: 'resolvedId');
@@ -109,8 +109,8 @@ class PocketDataTests {
 			});
 
 			test('should parse favorite from json', () {
-
-				var actualData = new PocketData.fromJSON('{"favorite": "1"}');
+				
+				PocketData actualData = new PocketData.fromJSON('{"favorite": "1"}');
 				expect(actualData.isFavorite, true);
 
 				actualData = new PocketData.fromJSON('{"favorite": "0"}');
@@ -118,14 +118,14 @@ class PocketDataTests {
 			});
 
 			test('should parse tags from json', () {
-
-				var actualData = new PocketData.fromJSON('{}');
+				
+				PocketData actualData = new PocketData.fromJSON('{}');
 				expect(actualData.tags, []);
 
 				actualData = new PocketData.fromJSON('{"tags": []}');
 				expect(actualData.tags, []);
 
-				var json = '''
+				String json = '''
 				{
 				"tags":{
 				    "digest":{"item_id":"1052437824","tag":"digest"},
@@ -146,14 +146,14 @@ class PocketDataTests {
 			});
 
 			test('should parse authors from json', () {
-
-				var actualData = new PocketData.fromJSON('{}');
+				
+				PocketData actualData = new PocketData.fromJSON('{}');
 				expect(actualData.authors, []);
 
 				actualData = new PocketData.fromJSON('{"authors": []}');
 				expect(actualData.authors, []);
 
-				var json = '''
+				String json = '''
 				{
 					"authors": {
 						  "33265953": {
@@ -176,14 +176,14 @@ class PocketDataTests {
 			});
 
 			test('should parse videos from json', () {
-
-				var actualData = new PocketData.fromJSON('{}');
+				
+				PocketData actualData = new PocketData.fromJSON('{}');
 				expect(actualData.videos, []);
 
 				actualData = new PocketData.fromJSON('{"videos": []}');
 				expect(actualData.videos, []);
 
-				var json = '''
+				String json = '''
 				{
 					"videos": {
 				    "1": {
@@ -212,14 +212,14 @@ class PocketDataTests {
 			});
 
 			test('should parse images from json', () {
-
-				var actualData = new PocketData.fromJSON('{}');
+				
+				PocketData actualData = new PocketData.fromJSON('{}');
 				expect(actualData.images, []);
 
 				actualData = new PocketData.fromJSON('{"images": []}');
 				expect(actualData.images, []);
 
-				var json = '''
+				String json = '''
 				{
 					"images": {
 				    "1": {
@@ -248,8 +248,8 @@ class PocketDataTests {
 			});
 
 			test('should parse status from json', () {
-
-				var actualData = new PocketData.fromJSON('{"status": "0"}');
+				
+				PocketData actualData = new PocketData.fromJSON('{"status": "0"}');
 				expect(actualData.status, Status.normal);
 
 				actualData = new PocketData.fromJSON('{"status": "1"}');
@@ -265,8 +265,8 @@ class PocketDataTests {
 			});
 
 			test('should parse is_article from json', () {
-
-				var actualData = new PocketData.fromJSON('{"is_article": "1"}');
+				
+				PocketData actualData = new PocketData.fromJSON('{"is_article": "1"}');
 				expect(actualData.isArticle, true);
 
 				actualData = new PocketData.fromJSON('{"is_article": "0"}');
@@ -274,8 +274,8 @@ class PocketDataTests {
 			});
 
 			test('should parse has_image from json', () {
-
-				var actualData = new PocketData.fromJSON('{"has_image": "0"}');
+				
+				PocketData actualData = new PocketData.fromJSON('{"has_image": "0"}');
 				expect(actualData.isImage, false);
 				expect(actualData.hasImages, false);
 
@@ -289,8 +289,8 @@ class PocketDataTests {
 			});
 
 			test('should parse has_video from json', () {
-
-				var actualData = new PocketData.fromJSON('{"has_video": "0"}');
+				
+				PocketData actualData = new PocketData.fromJSON('{"has_video": "0"}');
 				expect(actualData.isVideo, false);
 				expect(actualData.hasVideos, false);
 
@@ -304,8 +304,8 @@ class PocketDataTests {
 			});
 
 			test('should parse word_count from json', () {
-
-				var actualData = new PocketData.fromJSON('{"word_count": "123"}');
+				
+				PocketData actualData = new PocketData.fromJSON('{"word_count": "123"}');
 				expect(actualData.wordCount, 123);
 
 				actualData = new PocketData.fromJSON('{}');

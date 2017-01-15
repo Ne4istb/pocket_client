@@ -6,12 +6,12 @@ import 'package:test/test.dart';
 
 class UserTests {
 
-  static run() {
+  static void run() {
     test('User. Should convert json string to pocket user data', () {
 
-      const json = '{"username":"Ne4istb", "access_token": "5678defg-5678-defg-5678-defg56"}';
+      const String json = '{"username":"Ne4istb", "access_token": "5678defg-5678-defg-5678-defg56"}';
 
-      var actualData = new User.fromJSON(json);
+      User actualData = new User.fromJSON(json);
 
       expect(actualData.userName, 'Ne4istb');
       expect(actualData.accessToken, '5678defg-5678-defg-5678-defg56');
@@ -19,7 +19,7 @@ class UserTests {
 
     test('User. Should create user data', () {
 
-      var actualData = new User('Ne4istb', '5678defg-5678-defg-5678-defg56');
+      User actualData = new User('Ne4istb', '5678defg-5678-defg-5678-defg56');
 
       expect(actualData.userName, 'Ne4istb');
       expect(actualData.accessToken, '5678defg-5678-defg-5678-defg56');

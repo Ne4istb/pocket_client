@@ -14,40 +14,38 @@ import 'package:pocket_client/src/user.dart';
 
 class ClientAuthentication extends ClientBase {
 
-	static const oauthRequestUrl = '/v3/oauth/request';
-	static const oauthTokenUrl = '/auth/authorize';
-	static const oauthAccessUrl = '/v3/oauth/authorize';
+	static const String oauthRequestUrl = '/v3/oauth/request';
+	static const String oauthTokenUrl = '/auth/authorize';
+	static const String oauthAccessUrl = '/v3/oauth/authorize';
 
 	ClientAuthentication(String consumerKey, [http.Client httpClient = null]) : super(consumerKey, httpClient);
 
 	Future<String> getRequestToken(String redirectUri) {
-		var url = '${ClientBase.rootUrl}$oauthRequestUrl';
+		String url = '${ClientBase.rootUrl}$oauthRequestUrl';
 
-		Map<String, String> body = {
-			'consumer_key': consumerKey,
-			'redirect_uri': redirectUri
-		};
+		Map<String, String> body = new Map<String, String>()
+			..['consumer_key'] = consumerKey
+			..['redirect_uri'] = redirectUri;
 
-		var bodyJson = JSON.encode(body);
+		String bodyJson = JSON.encode(body);
 
 		return httpPost(url, bodyJson).then((http.Response response) => JSON.decode(response.body)['code']);
 	}
 
 	Future<User> getAccessToken(String requestToken) {
-		var url = '${ClientBase.rootUrl}$oauthAccessUrl';
+		String url = '${ClientBase.rootUrl}$oauthAccessUrl';
+		
+		Map<String, String> body = new Map<String, String>()
+			..['consumer_key'] = consumerKey
+			..['code'] = requestToken;
 
-		Map<String, String> body = {
-			'consumer_key': consumerKey,
-			'code': requestToken
-		};
-
-		var bodyJson = JSON.encode(body);
+		String bodyJson = JSON.encode(body);
 
 		return httpPost(url, bodyJson).then((http.Response response) => new User.fromJSON(response.body));
 	}
 
 	static String getAuthorizeUrl(String requestToken, String redirectUri) {
-		var encodedRedirectUrl = Uri.encodeQueryComponent(redirectUri);
+		String encodedRedirectUrl = Uri.encodeQueryComponent(redirectUri);
 		return '${ClientBase.rootUrl}$oauthTokenUrl?request_token=$requestToken&redirect_uri=$encodedRedirectUrl';
 	}
 }

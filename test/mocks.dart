@@ -1,5 +1,6 @@
 library pocket_client.mocks;
 
+import 'dart:async';
 import 'package:test/test.dart';
 
 import 'package:http/http.dart';
@@ -15,7 +16,7 @@ class Mocks {
 			expect(request.method, 'POST');
 			assertBody(request.body);
 
-			return response;
+			return new Future<Response>.value(response);
 		});
 	}
 }

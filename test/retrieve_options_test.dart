@@ -4,16 +4,16 @@ import 'package:pocket_client/pocket_client.dart';
 import 'package:test/test.dart';
 
 class RetrieveOptionsTests {
-  static run() {
+  static void run() {
     group('RetrieveOptions.toMap()', () {
       test('should return empty json', () {
-        var options = new RetrieveOptions();
+        RetrieveOptions options = new RetrieveOptions();
 
         expect(options.toMap(), {});
       });
 
       test('should return a json with state', () {
-        var options = new RetrieveOptions(state: State.unread);
+        RetrieveOptions options = new RetrieveOptions(state: State.unread);
 
         expect(options.toMap(), {"state":"unread"});
 
@@ -25,7 +25,7 @@ class RetrieveOptionsTests {
       });
 
       test('should return a json with favorite', () {
-        var options = new RetrieveOptions(isFavorite: true);
+        RetrieveOptions options = new RetrieveOptions(isFavorite: true);
         expect(options.toMap(), {"favorite":"1"});
 
         options.isFavorite = false;
@@ -33,12 +33,12 @@ class RetrieveOptionsTests {
       });
 
       test('should return a json with tag', () {
-        var options = new RetrieveOptions(tag: 'some_tag');
+        RetrieveOptions options = new RetrieveOptions(tag: 'some_tag');
         expect(options.toMap(), {"tag":"some_tag"});
       });
 
       test('should return a json with content type', () {
-        var options = new RetrieveOptions(contentType: ContentType.article);
+        RetrieveOptions options = new RetrieveOptions(contentType: ContentType.article);
         expect(options.toMap(), {"contentType":"article"});
 
         options.contentType = ContentType.video;
@@ -49,7 +49,7 @@ class RetrieveOptionsTests {
       });
 
       test('should return a json with sort type', () {
-        var options = new RetrieveOptions(sortType: SortType.newest);
+        RetrieveOptions options = new RetrieveOptions(sortType: SortType.newest);
         expect(options.toMap(), {"sort":"newest"});
 
         options.sortType = SortType.oldest;
@@ -63,7 +63,7 @@ class RetrieveOptionsTests {
       });
 
       test('should return a json with detail type', () {
-        var options = new RetrieveOptions(detailType: DetailType.simple);
+        RetrieveOptions options = new RetrieveOptions(detailType: DetailType.simple);
         expect(options.toMap(), {"detailType":"simple"});
 
         options.detailType = DetailType.complete;
@@ -71,22 +71,22 @@ class RetrieveOptionsTests {
       });
 
       test('should return a json with search', () {
-        var options = new RetrieveOptions(search: 'some_search_pattern');
+        RetrieveOptions options = new RetrieveOptions(search: 'some_search_pattern');
         expect(options.toMap(), {"search":"some_search_pattern"});
       });
 
       test('should return a json with domain', () {
-        var options = new RetrieveOptions(domain: 'http://domain.test');
+        RetrieveOptions options = new RetrieveOptions(domain: 'http://domain.test');
         expect(options.toMap(), {"domain":"http://domain.test"});
       });
 
       test('should return a json with count', () {
-        var options = new RetrieveOptions(count: 10);
+        RetrieveOptions options = new RetrieveOptions(count: 10);
         expect(options.toMap(), {"count":"10"});
       });
 
       test('should return a json with offset', () {
-        var options = new RetrieveOptions(offset: 10);
+        RetrieveOptions options = new RetrieveOptions(offset: 10);
         expect(options.toMap(), {});
 
         options.count = 50;
@@ -94,12 +94,12 @@ class RetrieveOptionsTests {
       });
 
       test('should return a json with since', () {
-        var options = new RetrieveOptions(since: new DateTime.utc(2015, 10, 20));
+        RetrieveOptions options = new RetrieveOptions(since: new DateTime.utc(2015, 10, 20));
         expect(options.toMap(), {"since":"1445299200000"});
       });
 
       test('should return json with all options', () {
-        var options = new RetrieveOptions()
+        RetrieveOptions options = new RetrieveOptions()
           ..since = new DateTime.utc(2015, 5, 4)
           ..contentType = ContentType.video
           ..count = 100
@@ -112,7 +112,7 @@ class RetrieveOptionsTests {
           ..state = State.archive
           ..tag = 'cats';
 
-        var expected = {
+        Map<String, String> expected = {
           'state':'archive',
           'favorite':'1',
           'tag':'cats',

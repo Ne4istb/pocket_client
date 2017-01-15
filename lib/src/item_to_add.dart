@@ -10,7 +10,7 @@ class ItemToAdd {
 	ItemToAdd(this.url, {this.title, this.tags, this.tweetId});
 
 	Map<String, String> toMap() {
-		Map<String, String> result = {};
+		Map<String, String> result = new Map<String, String>();
 
 		result['url'] = Uri.encodeFull(url);
 

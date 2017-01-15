@@ -13,18 +13,18 @@ class TestClientBase extends pocket.ClientBase {
 
 class ClientBaseTests {
 
-	static run() {
+	static void run() {
 		group('httpPost()', () {
-			const consumer_key = '1234-abcd1234abcd1234abcd1234';
-			const testUrl = 'http://test';
-			const testBody = 'test body';
+			const String consumerKey = '1234-abcd1234abcd1234abcd1234';
+			const String testUrl = 'http://test';
+			const String testBody = 'test body';
 
 			test('should return requested data', () {
-				var expected = '{"test":"passed"}';
-				var response = new Response(expected, 200);
+				String expected = '{"test":"passed"}';
+				Response response = new Response(expected, 200);
 
-				var client = Mocks.httpClient(response, testUrl, (body) => expect(body, testBody));
-				var pocketBase = new TestClientBase(consumer_key, client);
+				Client client = Mocks.httpClient(response, testUrl, (String body) => expect(body, testBody));
+				TestClientBase pocketBase = new TestClientBase(consumerKey, client);
 
 				pocketBase.httpPost(testUrl, testBody).then((Response response) => expect(response.body, expected));
 			});
@@ -36,14 +36,15 @@ class ClientBaseTests {
 					'x-error': 'Missing consumer key.'
 				};
 
-				var response = new Response('', 400, headers: headers);
+				Response response = new Response('', 400, headers: headers);
 
-				var client = Mocks.httpClient(response, testUrl, (body) => expect(body, testBody));
-				var pocketBase = new TestClientBase(consumer_key, client);
+				Client client = Mocks.httpClient(response, testUrl, (String body) => expect(body, testBody));
+				TestClientBase pocketBase = new TestClientBase(consumerKey, client);
 
 				expect(
 				pocketBase.httpPost(testUrl, testBody),
-				throwsA(predicate((e) => e is ArgumentError && e.message == 'An error occurred: 138. Missing consumer key.')));
+				throwsA(predicate((Error e) => e is ArgumentError && e.message == 'An error occurred: 138. Missing consumer key'
+				'.')));
 			});
 
 			test('should throw a client exception with code and description ', () {
@@ -52,14 +53,16 @@ class ClientBaseTests {
 					'x-error': 'Pocket server issue.'
 				};
 
-				var response = new Response('', 500, headers: headers);
+				Response response = new Response('', 500, headers: headers);
 
-				var client = Mocks.httpClient(response, testUrl, (body) => expect(body, testBody));
-				var pocketBase = new TestClientBase(consumer_key, client);
+				Client client = Mocks.httpClient(response, testUrl, (String body) => expect(body, testBody));
+				TestClientBase pocketBase = new TestClientBase(consumerKey, client);
 
 				expect(
 				pocketBase.httpPost(testUrl, testBody),
-				throwsA(predicate((e) => e is ClientException && e.message == 'An error occurred: 199. Pocket server issue.')));
+				throwsA(predicate((Exception e) => e is ClientException && e.message == 'An error occurred: 199. Pocket server '
+				'issue'
+				'.')));
 			});
 		});
 	}

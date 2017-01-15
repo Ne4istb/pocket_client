@@ -5,10 +5,10 @@ import 'package:test/test.dart';
 
 class AuthorTests {
 
-  static run() {
+  static void run() {
     test('Author. Should convert json string to pocket tag data', () {
 
-      const json = '''
+      const String json = '''
       {
         "item_id": "1033645339",
         "author_id": "33265953",
@@ -17,7 +17,7 @@ class AuthorTests {
       }
       ''';
 
-      var actualData = new Author.fromJSON(json);
+      Author actualData = new Author.fromJSON(json);
 
       expect(actualData.itemId, '1033645339');
       expect(actualData.authorId, '33265953');
@@ -26,8 +26,8 @@ class AuthorTests {
     });
 
     test('Author. Should put correct data via constructor', () {
-
-      var actualData = new Author('1033645339', '33265953', 'zsolt-nagy', url: 'http:\/\/www.zsoltnagy.eu\/author\/zsolt555\/');
+  
+      Author actualData = new Author('1033645339', '33265953', 'zsolt-nagy', url: 'http:\/\/www.zsoltnagy.eu\/author\/zsolt555\/');
 
       expect(actualData.itemId, '1033645339');
       expect(actualData.authorId, '33265953');

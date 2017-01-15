@@ -13,7 +13,7 @@ class Author {
   Author(this.itemId, this.authorId, this.name, {this.url});
 
   Author.fromJSON(String jsonString) {
-    Map json = JSON.decode(jsonString);
+    Map<String, String> json = JSON.decode(jsonString) as Map<String, String>;
     _initFromMap(json);
   }
 
@@ -21,7 +21,7 @@ class Author {
 	  _initFromMap(map);
   }
 
-  _initFromMap(Map<String, String> map) {
+  void _initFromMap(Map<String, String> map) {
 	  itemId = map['item_id'];
 	  authorId = map['author_id'];
 	  name = map['name'];

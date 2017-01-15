@@ -4,7 +4,7 @@ import 'package:pocket_client/pocket_client.dart';
 import 'package:test/test.dart';
 
 class PocketResponseTests {
-	static run() {
+	static void run() {
 		group('PocketResponse.fromJSON()', () {
 			test('should create object from json', () {
 				String json = '''
@@ -20,8 +20,8 @@ class PocketResponseTests {
 				  "error": "Some error",
 				  "since": 1443547195
 				}''';
-
-				var actualData = new PocketResponse.fromJSON(json);
+				
+				PocketResponse actualData = new PocketResponse.fromJSON(json);
 
 				expect(actualData.status, 1, reason: 'status');
 				expect(actualData.complete, 0, reason: 'complete');
@@ -35,8 +35,8 @@ class PocketResponseTests {
 			});
 
 			test('should parse since from json', () {
-
-				var actualData = new PocketResponse.fromJSON('{}');
+				
+				PocketResponse actualData = new PocketResponse.fromJSON('{}');
 				expect(actualData.since, null);
 
 				actualData = new PocketResponse.fromJSON('{"since": 1443547100}');
@@ -44,14 +44,14 @@ class PocketResponseTests {
 			});
 
 			test('should parse list from json', () {
-
-				var actualData = new PocketResponse.fromJSON('{}');
+				
+				PocketResponse actualData = new PocketResponse.fromJSON('{}');
 				expect(actualData.items, {});
 
 				actualData = new PocketResponse.fromJSON('{"list":[]}');
 				expect(actualData.items, {});
 
-				var json = '''
+				String json = '''
 				{
 					"list": {
 				    "1052437824": {

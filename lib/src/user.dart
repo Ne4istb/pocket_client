@@ -10,7 +10,7 @@ class User {
   User(this.userName, this.accessToken);
 
   User.fromJSON(String jsonString) {
-    Map json = JSON.decode(jsonString);
+    Map<String, String> json = JSON.decode(jsonString) as Map<String, String>;
     userName = json['username'];
     accessToken = json['access_token'];
   }

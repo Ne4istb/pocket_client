@@ -12,11 +12,11 @@ class Tag {
   }
 
   Tag.fromJSON(String jsonString) {
-    Map json = JSON.decode(jsonString);
+    Map<String, String> json = JSON.decode(jsonString) as Map<String, String>;
     _initFromMap(json);
   }
 
-  _initFromMap(Map<String, String> map) {
+  void _initFromMap(Map<String, String> map) {
 	  itemId = map['item_id'];
 	  tag = map['tag'];
   }

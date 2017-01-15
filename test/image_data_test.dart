@@ -4,7 +4,7 @@ import 'package:pocket_client/pocket_client.dart';
 import 'package:test/test.dart';
 
 class ImageDataTests {
-	static run() {
+	static void run() {
 		group('ImageData.fromJSON()', () {
 
 			test('should create object from json', () {
@@ -18,8 +18,8 @@ class ImageDataTests {
 		      "credit": "Jamie Squire\/Getty Images",
 		      "caption": "cap"
 		    }''';
-
-				var actualData = new ImageData.fromJSON(json);
+				
+				ImageData actualData = new ImageData.fromJSON(json);
 
 				expect(actualData.itemId, '229279689', reason: 'itemId');
 				expect(actualData.imageId, '1', reason: 'imageId');
@@ -31,8 +31,8 @@ class ImageDataTests {
 			});
 
 			test('should parse width from json', () {
-
-				var actualData = new ImageData.fromJSON('{"width": "123"}');
+				
+				ImageData actualData = new ImageData.fromJSON('{"width": "123"}');
 				expect(actualData.width, 123);
 
 				actualData = new ImageData.fromJSON('{}');
@@ -40,8 +40,8 @@ class ImageDataTests {
 			});
 
 			test('should parse height from json', () {
-
-				var actualData = new ImageData.fromJSON('{"height": "123"}');
+				
+				ImageData actualData = new ImageData.fromJSON('{"height": "123"}');
 				expect(actualData.height, 123);
 
 				actualData = new ImageData.fromJSON('{}');

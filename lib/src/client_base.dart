@@ -5,12 +5,11 @@ import 'package:http/http.dart' as http;
 
 abstract class ClientBase {
 
-	static final rootUrl = 'https://getpocket.com';
+	static final String rootUrl = 'https://getpocket.com';
 
-	final Map<String, String> headers = {
-		'Content-Type': 'application/json; charset=UTF-8',
-		'X-Accept': 'application/json'
-	};
+	final Map<String, String> headers = new Map<String, String>()
+	 ..['Content-Type'] = 'application/json; charset=UTF-8'
+	 ..['X-Accept'] = 'application/json';
 
 	String consumerKey;
 	http.Client _httpClient;
@@ -29,8 +28,8 @@ abstract class ClientBase {
 		});
 	}
 
-	_processError(http.Response response) {
-		var headers = response.headers;
+	void _processError(http.Response response) {
+		Map<String, String> headers = response.headers;
 
 		if (response.statusCode >= 400 && response.statusCode < 500)
 			throw new ArgumentError('An error occurred: ${headers['x-error-code']}. ${headers['x-error']}');

@@ -15,15 +15,15 @@ class VideoData {
 	VideoData(this.itemId, this.videoId, this.sourceUrl, {this.width, this.height, this.type, this.vId});
 
 	VideoData.fromJSON(String jsonString) {
-    Map json = JSON.decode(jsonString);
-    _initFromMap(json);
+		Map<String, String> json = JSON.decode(jsonString) as Map<String, String>;
+		_initFromMap(json);
   }
 
 	VideoData.fromMap(Map<String, String> map) {
 		_initFromMap(map);
 	}
 
-	_initFromMap(Map<String, String> map) {
+	void _initFromMap(Map<String, String> map) {
 		itemId = map['item_id'];
 		videoId = map['video_id'];
 		vId = map['vid'];

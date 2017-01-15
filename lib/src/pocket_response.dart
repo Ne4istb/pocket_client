@@ -12,7 +12,7 @@ class PocketResponse {
 	DateTime since;
 
 	PocketResponse.fromJSON(String jsonString) {
-		Map json = JSON.decode(jsonString);
+		Map<String, dynamic> json = JSON.decode(jsonString) as Map<String, dynamic>;
 
 		status = json['status'];
 		complete = json['complete'];
@@ -21,11 +21,11 @@ class PocketResponse {
 		since = json['since'] != null ? new DateTime.fromMillisecondsSinceEpoch(json['since']) : null;
 	}
 
-	Map<String, PocketData> _convertToPocketDataList(list) {
-		Map<String, PocketData> result = {};
+	Map<String, PocketData> _convertToPocketDataList(dynamic list) {
+		Map<String, PocketData> result = new Map<String, PocketData>();
 
 		if (list != null && list.length > 0)
-			list.forEach((id, item) => result[id] = new PocketData.fromMap(item));
+			list.forEach((String id, Map<String,String> item) => result[id] = new PocketData.fromMap(item));
 
 		return result;
 	}

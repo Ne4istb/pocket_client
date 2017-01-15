@@ -5,12 +5,12 @@ import 'package:test/test.dart';
 
 class TagTests {
 
-  static run() {
+  static void run() {
     test('Tag. Should convert json string to pocket tag data', () {
 
-      const json = '{"item_id":"1052437824","tag":"digest"}';
+      const String json = '{"item_id":"1052437824","tag":"digest"}';
 
-      var actualData = new Tag.fromJSON(json);
+      Tag actualData = new Tag.fromJSON(json);
 
       expect(actualData.itemId, '1052437824');
       expect(actualData.tag, 'digest');
