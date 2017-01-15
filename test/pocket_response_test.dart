@@ -4,10 +4,10 @@ import 'package:pocket_client/pocket_client.dart';
 import 'package:test/test.dart';
 
 class PocketResponseTests {
-	static void run() {
-		group('PocketResponse.fromJSON()', () {
-			test('should create object from json', () {
-				String json = '''
+  static void run() {
+    group('PocketResponse.fromJSON()', () {
+      test('should create object from json', () {
+        String json = '''
 		    {
 				  "status": 1,
 				  "complete": 0,
@@ -20,38 +20,36 @@ class PocketResponseTests {
 				  "error": "Some error",
 				  "since": 1443547195
 				}''';
-				
-				PocketResponse actualData = new PocketResponse.fromJSON(json);
 
-				expect(actualData.status, 1, reason: 'status');
-				expect(actualData.complete, 0, reason: 'complete');
-				expect(actualData.error, 'Some error', reason: 'error');
-				expect(actualData.since, new DateTime.fromMillisecondsSinceEpoch(1443547195), reason: 'since');
+        PocketResponse actualData = new PocketResponse.fromJSON(json);
 
-				expect(actualData.items.length, 1, reason: 'list length');
+        expect(actualData.status, 1, reason: 'status');
+        expect(actualData.complete, 0, reason: 'complete');
+        expect(actualData.error, 'Some error', reason: 'error');
+        expect(actualData.since, new DateTime.fromMillisecondsSinceEpoch(1443547195), reason: 'since');
 
-				expect(actualData.items['1052437824'].itemId, '1052437824', reason: 'list item 0');
-				expect(actualData.items['1052437824'].resolvedId, '1052437824', reason: 'list item 0');
-			});
+        expect(actualData.items.length, 1, reason: 'list length');
 
-			test('should parse since from json', () {
-				
-				PocketResponse actualData = new PocketResponse.fromJSON('{}');
-				expect(actualData.since, null);
+        expect(actualData.items['1052437824'].itemId, '1052437824', reason: 'list item 0');
+        expect(actualData.items['1052437824'].resolvedId, '1052437824', reason: 'list item 0');
+      });
 
-				actualData = new PocketResponse.fromJSON('{"since": 1443547100}');
-				expect(actualData.since, new DateTime.fromMillisecondsSinceEpoch(1443547100));
-			});
+      test('should parse since from json', () {
+        PocketResponse actualData = new PocketResponse.fromJSON('{}');
+        expect(actualData.since, null);
 
-			test('should parse list from json', () {
-				
-				PocketResponse actualData = new PocketResponse.fromJSON('{}');
-				expect(actualData.items, {});
+        actualData = new PocketResponse.fromJSON('{"since": 1443547100}');
+        expect(actualData.since, new DateTime.fromMillisecondsSinceEpoch(1443547100));
+      });
 
-				actualData = new PocketResponse.fromJSON('{"list":[]}');
-				expect(actualData.items, {});
+      test('should parse list from json', () {
+        PocketResponse actualData = new PocketResponse.fromJSON('{}');
+        expect(actualData.items, {});
 
-				String json = '''
+        actualData = new PocketResponse.fromJSON('{"list":[]}');
+        expect(actualData.items, {});
+
+        String json = '''
 				{
 					"list": {
 				    "1052437824": {
@@ -66,20 +64,20 @@ class PocketResponseTests {
 				}
 				''';
 
-				actualData = new PocketResponse.fromJSON(json);
+        actualData = new PocketResponse.fromJSON(json);
 
-				expect(actualData.items.length, 2, reason: 'list length');
+        expect(actualData.items.length, 2, reason: 'list length');
 
-				expect(actualData.items['1052437824'].itemId, '1052437824', reason: 'list item 0');
-				expect(actualData.items['1052437824'].resolvedId, '1052437824', reason: 'list item 0');
+        expect(actualData.items['1052437824'].itemId, '1052437824', reason: 'list item 0');
+        expect(actualData.items['1052437824'].resolvedId, '1052437824', reason: 'list item 0');
 
-				expect(actualData.items['1052437822'].itemId, '1052437822', reason: 'list item 1');
-				expect(actualData.items['1052437822'].resolvedId, '1052437858', reason: 'list item 1');
-			});
-		});
-	}
+        expect(actualData.items['1052437822'].itemId, '1052437822', reason: 'list item 1');
+        expect(actualData.items['1052437822'].resolvedId, '1052437858', reason: 'list item 1');
+      });
+    });
+  }
 }
 
 void main() {
-	PocketResponseTests.run();
+  PocketResponseTests.run();
 }

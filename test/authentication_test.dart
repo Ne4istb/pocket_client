@@ -8,17 +8,13 @@ import 'package:http/http.dart';
 
 import 'mocks.dart';
 
-class AuthenticationTests{
-
-  static void run(){
-
+class AuthenticationTests {
+  static void run() {
     group('getRequestToken()', () {
-
       const String consumerKey = '1234-abcd1234abcd1234abcd1234';
       const String redirectUri = 'http://som_redirect_uri';
 
       test('should return request token', () {
-
         const String requestCode = 'dcba4321-dcba-4321-dcba-4321dc';
 
         Response response = new Response('{"code":"$requestCode"}', 200);
@@ -27,8 +23,8 @@ class AuthenticationTests{
 
         Client client = Mocks.httpClient(response, url, (String body) {
           Map<String, String> json = JSON.decode(body);
-	        expect(json['consumer_key'], consumerKey);
-	        expect(json['redirect_uri'], redirectUri);
+          expect(json['consumer_key'], consumerKey);
+          expect(json['redirect_uri'], redirectUri);
         });
 
         pocket.ClientAuthentication pocketClient = new pocket.ClientAuthentication(consumerKey, client);
@@ -40,12 +36,10 @@ class AuthenticationTests{
     });
 
     group('getAccessToken()', () {
-
       const String consumerKey = '1234-abcd1234abcd1234abcd1234';
       const String requestCode = 'dcba4321-dcba-4321-dcba-4321dc';
 
       test('should return pocket user', () {
-
         const String accessToken = '5678defg-5678-defg-5678-defg56';
         const String userName = 'Ne4istb';
 
@@ -55,8 +49,8 @@ class AuthenticationTests{
 
         Client client = Mocks.httpClient(response, url, (String body) {
           Map<String, String> json = JSON.decode(body);
-	        expect(json['consumer_key'], consumerKey);
-	        expect(json['code'], requestCode);
+          expect(json['consumer_key'], consumerKey);
+          expect(json['code'], requestCode);
         });
 
         pocket.ClientAuthentication pocketClient = new pocket.ClientAuthentication(consumerKey, client);
@@ -70,20 +64,19 @@ class AuthenticationTests{
     });
 
     group('getAuthorizeUrl()', () {
-
       test('should return authorization url', () {
-
         const String redirectUri = 'http://som_redirect_uri?test=me';
         const String requestCode = 'dcba4321-dcba-4321-dcba-4321dc';
 
         String actualUrl = pocket.ClientAuthentication.getAuthorizeUrl(requestCode, redirectUri);
 
-        expect(actualUrl, 'https://getpocket.com/auth/authorize?request_token=dcba4321-dcba-4321-dcba-4321dc&redirect_uri=http%3A%2F%2Fsom_redirect_uri%3Ftest%3Dme');
+        expect(actualUrl,
+            'https://getpocket.com/auth/authorize?request_token=dcba4321-dcba-4321-dcba-4321dc&redirect_uri=http%3A%2F%2Fsom_redirect_uri%3Ftest%3Dme');
       });
     });
   }
 }
 
 void main() {
-	AuthenticationTests.run();
+  AuthenticationTests.run();
 }

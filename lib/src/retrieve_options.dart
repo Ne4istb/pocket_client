@@ -3,7 +3,6 @@ library pocket_client.retreive_options;
 import 'package:pocket_client/src/enums.dart';
 
 class RetrieveOptions {
-
   State state;
   bool isFavorite;
   String tag;
@@ -16,51 +15,49 @@ class RetrieveOptions {
   int count;
   int offset;
 
-  RetrieveOptions({this.state, this.isFavorite, this.tag, this.contentType, this.sortType, this.detailType,
-  this.search, this.domain, this.since, this.count, this.offset});
+  RetrieveOptions(
+      {this.state,
+      this.isFavorite,
+      this.tag,
+      this.contentType,
+      this.sortType,
+      this.detailType,
+      this.search,
+      this.domain,
+      this.since,
+      this.count,
+      this.offset});
 
-  Map<String,String> toMap(){
+  Map<String, String> toMap() {
+    Map<String, String> result = new Map<String, String>();
 
-    Map<String,String> result = new Map<String, String>();
+    if (state != null) result['state'] = _getStateValueString(state);
 
-    if (state != null)
-      result['state'] = _getStateValueString(state);
+    if (isFavorite != null) result['favorite'] = isFavorite ? '1' : '0';
 
-    if (isFavorite != null)
-      result['favorite'] = isFavorite ? '1' : '0';
+    if (tag != null && tag.isNotEmpty) result['tag'] = tag;
 
-    if (tag != null && tag.isNotEmpty)
-      result['tag'] = tag;
+    if (contentType != null) result['contentType'] = _getContentTypeString(contentType);
 
-    if (contentType != null)
-      result['contentType'] = _getContentTypeString(contentType);
+    if (sortType != null) result['sort'] = _getSortTypeString(sortType);
 
-    if (sortType != null)
-      result['sort'] = _getSortTypeString(sortType);
+    if (detailType != null) result['detailType'] = _getDetailTypeString(detailType);
 
-    if (detailType != null)
-      result['detailType'] = _getDetailTypeString(detailType);
+    if (search != null && search.isNotEmpty) result['search'] = search;
 
-    if (search !=null && search.isNotEmpty)
-      result['search'] = search;
+    if (domain != null && domain.isNotEmpty) result['domain'] = domain;
 
-    if (domain !=null && domain.isNotEmpty)
-      result['domain'] = domain;
+    if (count != null && count > 0) result['count'] = count.toString();
 
-    if (count !=null && count > 0)
-      result['count'] = count.toString();
+    if (offset != null && result.containsKey('count')) result['offset'] = offset.toString();
 
-    if (offset !=null && result.containsKey('count'))
-      result['offset'] = offset.toString();
-
-    if (since != null)
-      result['since'] = since.millisecondsSinceEpoch.toString();
+    if (since != null) result['since'] = since.millisecondsSinceEpoch.toString();
 
     return result;
   }
 
-  String _getStateValueString(State state){
-    switch (state){
+  String _getStateValueString(State state) {
+    switch (state) {
       case State.unread:
         return 'unread';
       case State.all:
@@ -72,8 +69,8 @@ class RetrieveOptions {
     }
   }
 
-  String _getContentTypeString(ContentType contentType){
-    switch (contentType){
+  String _getContentTypeString(ContentType contentType) {
+    switch (contentType) {
       case ContentType.article:
         return 'article';
       case ContentType.video:
@@ -85,8 +82,8 @@ class RetrieveOptions {
     }
   }
 
-  String _getSortTypeString(SortType sortType){
-    switch (sortType){
+  String _getSortTypeString(SortType sortType) {
+    switch (sortType) {
       case SortType.newest:
         return 'newest';
       case SortType.oldest:
@@ -100,8 +97,8 @@ class RetrieveOptions {
     }
   }
 
-  String _getDetailTypeString(DetailType detailType){
-    switch (detailType){
+  String _getDetailTypeString(DetailType detailType) {
+    switch (detailType) {
       case DetailType.complete:
         return 'complete';
       case DetailType.simple:

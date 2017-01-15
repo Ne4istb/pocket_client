@@ -3,7 +3,6 @@ library pocket_client.user;
 import 'dart:convert';
 
 class User {
-
   String accessToken;
   String userName;
 

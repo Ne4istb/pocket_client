@@ -3,12 +3,11 @@ library pocket_client.tag;
 import 'dart:convert';
 
 class Tag {
-
   String itemId;
   String tag;
 
   Tag.fromMap(Map<String, String> map) {
-	  _initFromMap(map);
+    _initFromMap(map);
   }
 
   Tag.fromJSON(String jsonString) {
@@ -17,7 +16,7 @@ class Tag {
   }
 
   void _initFromMap(Map<String, String> map) {
-	  itemId = map['item_id'];
-	  tag = map['tag'];
+    itemId = map['item_id'];
+    tag = map['tag'];
   }
 }
